@@ -3,11 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Controle Financeiro</title>
+    <link rel="shortcut icon" href="imagens/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="CSS/style.css">
 </head>
 <body>
-    <main>
+    <header>
         <h1>Controle de Dívidas</h1>
+    </header>
+    <main>    
+        <form action="">
+            <h2>Vamos iniciar seu controle financeiro</h2>
+            <div class="campo-formulario">
+                <label for="tipo-pagamento">Forma de Pagamento</label>
+                <select name="tipo_pagamento id="tipo-pagamento>
+                    <option value="debito">Débito</option>
+                    <option value="credito">Crédito</option>
+                    <option value="pix">Pix</option>
+                </select>
+            </div>
+            <div class="preenchimento">
+                <label for="valor">Valor (R$): </label>
+                <input type="number" id="valor" name="valor" placeholder="Ex: 50.75" step="0.01" min="0">
+            </div>
+            <div class="botao">
+                <button type="submit">Enviar</button>
+            </div>
+        </form>
     </main>
+    <footer>
+            <p>Desenvovido por Henrique Uchida para controle financeiro</p>
+    </footer>
 </body>
 </html>

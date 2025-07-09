@@ -1,0 +1,27 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+header {
+    margin-bottom: 30px;
+}
+
+header h1 {
+    margin: auto;
+    text-align: center;
+    padding: 20px;
+}
+
+main {
+    background-color: #DEDEDE;
+    color: black;
+    max-width: 1000px;
+    min-width: 700px;
+    margin: auto;
+    margin-bottom: 100px;
+}
+
+main h2 {
+    text-align: center;
+}
