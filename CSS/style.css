@@ -3,49 +3,35 @@
     padding: 0px;
 }
 
-header {
-    margin-bottom: 30px;
+body {
+    background-color: rgb(87, 127, 187);
+    font: normal 1.3em Arial;
 }
 
-header h1 {
-    margin: auto;
+header {
     text-align: center;
-    padding: 20px;
+    color: white;
+    margin: 15px;
 }
 
 main {
-    background-color: #DEDEDE;
-    color: black;
-    max-width: 1000px;
-    min-width: 700px;
+    background-color: white;
+    max-width: 700px;
+    min-width: 250px;
     margin: auto;
-    margin-bottom: 100px;
-}
-
-main h2 {
+    border-radius: 6px;
+    padding: 15px;
     text-align: center;
-    margin-bottom: 30px;
+    
 }
 
-main form {
-    width: 60%;
+section {
+    text-align: justify;
+    width: 100%; /*390px;*/
     margin: auto;
 }
 
-form label {
-    font-size: 1.5em;
-}
 
-form select {
-    margin: 20px;
-    padding: 3px;
-}
-
-form input {
-    margin: 15px;
-    padding: 3px;    
-}
-
-form button {
-    margin: 3% 0% 0% 73%;
+section div { 
+    padding: 5px;
 }
