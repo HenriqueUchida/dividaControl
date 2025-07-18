@@ -33,6 +33,11 @@ section {
     margin: auto;
 }
 
+section div#formulario {
+    width: 73%;
+    margin: auto;
+}
+
 select { 
     padding: 6px;
 }
