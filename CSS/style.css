@@ -27,11 +27,16 @@ main {
 
 section {
     text-align: justify;
-    width: 100%; /*390px;*/
+    width: 100%; 
     margin: auto;
 }
 
 
 section div { 
     padding: 5px;
+}
+
+footer {
+    color: white;
+    font-size: bold;
 }
