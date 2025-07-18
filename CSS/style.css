@@ -20,13 +20,13 @@ main {
     min-width: 250px;
     margin: auto;
     border-radius: 6px;
-    padding: 15px;
+    padding: 15px 0px 15px 0px;
     text-align: center;
     
 }
 
 section {
-    /*text-align: justify;*/
+    text-align: justify;
     width: 100%; /*390px;*/
     margin: auto;
 }
