@@ -26,7 +26,7 @@ main {
 }
 
 section {
-    text-align: justify;
+    /*text-align: justify;*/
     width: 100%; /*390px;*/
     margin: auto;
 }
