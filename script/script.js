@@ -14,6 +14,7 @@ let dados = {}
 function envia() {
     if (val.value == '' || motivo.value == '') {
         alert('Preencha todos os campos antes de enviar')
+        txt.innerHTML = ''
     } else {
         dados.data = dataFormatada
         dados.pagamento = pagto.value
