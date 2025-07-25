@@ -17,9 +17,9 @@ function envia() {
         txt.innerHTML = ''
     } else {
         dados.data = dataFormatada
-        dados.pagamento = pagto.value
+        dados.pagamento = pagto.value.toUpperCase()
         dados.valor = val.value
-        dados.motivo = motivo.value
+        dados.motivo = motivo.value.toUpperCase()
         txt.innerHTML = `
             <h3>Dados Enviados:</h3>
             <p><strong>Data:</strong> ${dados.data}</p>
