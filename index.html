@@ -21,7 +21,11 @@
                         <option value="debito">Débito</option>
                         <option value="credito">Crédito</option>
                         <option value="pix">Pix</option>
-                    </select>
+                    </select> <!--<br>
+                    <input type="radio" name="opcao" id="nubank">
+                    <label for="nubank">Nubank</label>
+                    <input type="radio" name="opcao" id="merc-pago">
+                    <label for="merc-pago">Mercado Pago</label> -->
                 </div>
                 <div class="preenchimento">
                     <label for="campo-valor">Valor (R$): </label><br>
@@ -32,7 +36,10 @@
                     <input type="text" name="motivo" id="campo-motivo" placeholder="Ex: Gasolina para moto">
                 </div>
                 <div class="botao">
-                    <button type="submit">Enviar</button>
+                    <input type="button" value="Enviar" id="enviar">
+                </div>
+                <div id="teste">
+
                 </div>
             </div>
         </section>
@@ -40,5 +47,6 @@
     <footer>
             <p>&copy;Henrique Uchida - Controle Financeiro</p>
     </footer>
+    <script src="script/script.js"></script>
 </body>
 </html>
