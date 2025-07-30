@@ -3,7 +3,7 @@ let val = document.getElementById('campo-valor')
 let motivo = document.getElementById('campo-motivo')
 motivo.addEventListener('keydown', function(event) {
     if (event.key === 'Enter') {
-        envia()
+        envia(event)
     }    
 })
 val.addEventListener('keydown', function(event) {
@@ -20,10 +20,19 @@ let ano = String(dataInicio.getFullYear())
 let dataFormatada = `${dia}/${mes}/${ano}`
 let dados = {}
 
-function envia() {
+function envia(event) {
     if (val.value == '' || motivo.value == '') {
+        event.preventDefault()
         alert('Preencha todos os campos antes de enviar')
         txt.innerHTML = ''
+        if (val.value == '' && motivo.value == ''){
+            val.focus()
+        } else if(val.value == '' && motivo.value != '') {
+            val.focus()
+        } else if (val.value != '' && motivo.value == '') {
+            motivo.focus()
+        }    
+        return
     } else {
         dados.data = dataFormatada
         dados.pagamento = pagto.value.toUpperCase()
