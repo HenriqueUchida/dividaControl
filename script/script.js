@@ -1,5 +1,4 @@
-let enviar = document.querySelector('input#enviar')
-enviar.addEventListener('click', envia)
+let enviar = document.querySelector('input#enviar').addEventListener('click', envia)
 let val = document.getElementById('campo-valor')
 let motivo = document.getElementById('campo-motivo')
 let pagto = document.getElementById('tipo-pagamento')
