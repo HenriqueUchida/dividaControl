@@ -31,7 +31,7 @@ function envia(event) {
             val.focus()
         } else if (val.value != '' && motivo.value == '') {
             motivo.focus()
-        }    
+        }
         return
     } else {
         dados.data = dataFormatada

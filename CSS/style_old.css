@@ -1,0 +1,68 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    background-color: rgb(87, 127, 187);
+    font: normal 1.3em Arial;
+}
+
+header {
+    text-align: center;
+    color: white;
+    margin: 15px;
+}
+
+main {
+    background-color: lightgray;
+    max-width: 700px;
+    min-width: 250px;
+    margin: auto;
+    border-radius: 15px;
+    padding: 15px 0px 15px 0px;
+    text-align: center;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.541);
+    
+}
+
+section {
+    text-align: left;
+    padding: 10px;
+    width: 70%; 
+    margin: auto;
+}
+
+form {
+    width: 73%;
+    margin: auto;
+}
+
+select { 
+    padding: 6px;
+}
+
+input { 
+    padding: 6px;
+}
+
+section div { 
+    padding: 5px;
+}
+
+div.button {
+    margin-top: 5px;
+}
+
+button {
+    padding: 8px;
+    margin: auto;
+}
+
+footer {
+    margin-top: 15px;
+    color: white;
+    font-size: bold;
+    text-align: center;
+    font-style: italic;
+}
