@@ -1,16 +1,19 @@
 let enviar = document.querySelector('input#enviar').addEventListener('click', envia)
 let val = document.getElementById('campo-valor')
 let motivo = document.getElementById('campo-motivo')
-motivo.addEventListener('keydown', function(event) {
-    if (event.key === 'Enter') {
-        envia(event)
-    }    
-})
+
 val.addEventListener('keydown', function(event) {
     if (event.key === 'Enter') {
         motivo.focus()
     }
 })
+
+motivo.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        envia(event)
+    }    
+})
+
 let pagto = document.getElementById('tipo-pagamento')
 let txt = document.getElementById('teste')
 let dataInicio = new Date()
