@@ -29,10 +29,10 @@ body {
 }
 
 header {
-    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    background: #23232e;
     color: white;
     text-align: center;
-    padding: 2rem 1rem;
+    padding-top: 1.5rem;
     box-shadow: 0 4px 8px var(--shadow-color);
 }
 
@@ -40,14 +40,79 @@ header h1 {
     font-weight: 700;
 }
 
+nav > a {
+    width: 100%;
+    color:#fff;
+    text-decoration: none;
+    transition: 0,3s;
+}
+
+a:hover {
+    opacity: 0.7;
+}
+
+.logo {
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+}
+
+nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background: #23232e;
+    height: 8vh;
+}
+
 main {
     flex: 1;
     display: flex;
-    /* --- MUDANÇA PRINCIPAL AQUI --- */
     flex-direction: column; /* Organiza h2 e section em coluna */
     justify-content: center;
     align-items: center;
     padding: 2rem 1rem;
+    background-size: cover;
+    height: 92vh;
+    position: relative; 
+    isolation: isolate;
+}
+
+main::before {
+    content: ''; /* Pseudo-elementos precisam de um 'content' */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url(/imagens/fundo_tela.jpg) no-repeat center center;
+    background-size: cover;
+    z-index: -1; /* Coloca o pseudo-elemento atrás do conteúdo do main */
+    /* Controle a opacidade aqui */
+    opacity: 0.95; /* Valor de 0 (transparente) a 1 (opaco) */
+}
+
+.nav-list {
+    list-style: none;
+    display: flex;
+}
+
+.nav-list li {
+    letter-spacing: 3px;
+    margin-left: 32px;
+}
+
+.mobile-menu {
+    cursor: pointer;
+    display: none;
+}
+
+.mobile-menu div {
+    width: 32px;
+    height: 2px;
+    background: white;
+    margin: 8px;
 }
 
 section {
@@ -58,7 +123,7 @@ section {
 h2 {
     text-align: center;
     margin-bottom: 1.5rem;
-    color: var(--text-color);
+    color: white  /* var(--text-color); */
 }
 
 /* --- Estilização do Formulário --- */
@@ -172,5 +237,75 @@ footer {
 
     h2 {
         font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 999px) {
+    body {
+        overflow-x: hidden;
+    }
+
+    /* ESTADO INICIAL DO MENU LATERAL (ESCONDIDO) */
+    .nav-list {
+        position: absolute;
+        top: 8vh;
+        right: 0;
+        width: 50vw;
+        height: 92vh;
+        background: #23232e; /* Fundo sólido, sem transparência */
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        
+        /* Esconde o menu movendo-o para fora da tela */
+        transform: translateX(100%);
+        transition: transform 0.3s ease-in;
+        z-index: 98; /* Camada abaixo do ícone do menu */
+    }
+
+    /* ESTADO ATIVO DO MENU (VISÍVEL) */
+    .nav-list.active {
+        transform: translateX(0); /* Traz o menu de volta para a tela */
+    }
+    
+    /* ITENS DA LISTA */
+    .nav-list li {
+        margin-left: 0;
+        opacity: 0; /* Começam invisíveis para a animação funcionar */
+    }
+    
+    /* ÍCONE HAMBÚRGUER */
+    .mobile-menu {
+        display: block;
+        cursor: pointer;
+        position: relative; 
+        z-index: 99; /* Fica em uma camada ACIMA do nav-list */
+    }
+    
+    .mobile-menu div {
+        transition: 0.3s; /* Animação suave para as linhas */
+    }
+
+    /* ANIMAÇÃO DO ÍCONE PARA "X" QUANDO ESTÁ ATIVO */
+    .mobile-menu.active .line1 {
+        transform: rotate(-45deg) translate(-8px, 8px);
+    }
+    
+    .mobile-menu.active .line2 {
+        opacity: 0;
+    }
+
+    .mobile-menu.active .line3 {
+        transform: rotate(45deg) translate(-5px, -7px);
+    }
+}
+@keyframes navLinkFade {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
     }
 }
