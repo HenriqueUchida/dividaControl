@@ -1,50 +1,12 @@
-class MobileNavbar {
-    constructor(mobileMenu, navList, navLinks) {
-        this.mobileMenu = document.querySelector(mobileMenu);
-        this.navList = document.querySelector(navList);
-        this.navLinks = document.querySelectorAll(navLinks);
-        this.activeClass = "active"
-
-        this.handleClick = this.handleClick.bind(this);
-    }
-
-
-    animateLinks() {
-        this.navLinks.forEach((link, index) => {
-            link.style.animation
-            ? (link.style.animation = "")
-            : (link.style.animation = `navLinkFade 0.5s ease forwards ${index/7 + 0.3}s`);
-        });
-    }
-
-    handleClick() {
-        this.navList.classList.toggle(this.activeClass);
-        this.mobileMenu.classList.toggle(this.activeClass);
-        this.animateLinks();
-    }
-
-    addClickEvent() {
-        this.mobileMenu.addEventListener("click", this.handleClick); 
-    }
-
-    init() {
-        if (this.mobileMenu) {
-            this.addClickEvent();
-        }
-        return this;
-    }
-}
-
-const mobileNavbar = new MobileNavbar(
-    ".mobile-menu",
-    ".nav-list",
-    ".nav-list li",
-);
-mobileNavbar.init();
-
 let enviar = document.querySelector('input#enviar').addEventListener('click', envia)
 let val = document.getElementById('campo-valor')
 let motivo = document.getElementById('campo-motivo')
+let pgDespesa = document.querySelector('a#despesa')
+let pgReceita = document.querySelector('a#receita')
+let controlPage = 'despesa'
+
+pgDespesa.addEventListener('click', trocaPagina)
+pgReceita.addEventListener('click', trocaPagina)
 
 val.addEventListener('keydown', function(event) {
     if (event.key === 'Enter') {
@@ -97,4 +59,8 @@ function envia(event) {
     val.value = ''
     motivo.value = ''
     val.focus()
+}
+
+function trocaPagina () {
+    if 
 }
