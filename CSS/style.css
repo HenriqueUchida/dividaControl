@@ -106,6 +106,14 @@ main::before {
 li > a {
     text-decoration: none;
     color: white;
+    font-size: 1em;
+}
+
+#despesa {
+    color:#8DE4F2;
+    font-size: 1.2em;
+    font-weight: bolder;
+    text-decoration: underline;
 }
 
 .mobile-menu {

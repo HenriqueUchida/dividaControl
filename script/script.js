@@ -1,12 +1,23 @@
 let enviar = document.querySelector('input#enviar').addEventListener('click', envia)
 let val = document.getElementById('campo-valor')
 let motivo = document.getElementById('campo-motivo')
-let pgDespesa = document.querySelector('a#despesa')
-let pgReceita = document.querySelector('a#receita')
+let btnDespesa = document.querySelector('a#despesa')
+let btnReceita = document.querySelector('a#receita')
+let formaPagto = document.getElementById('combo-box')
+let tituloMain = document.querySelector('h2#titulo-main')
 let controlPage = 'despesa'
 
-pgDespesa.addEventListener('click', trocaPagina)
-pgReceita.addEventListener('click', trocaPagina)
+btnDespesa.addEventListener('click', (event) => {
+    event.preventDefault()
+    controlPage = 'despesa'
+    trocaPagina()
+})
+
+btnReceita.addEventListener('click', (event) => {
+    event.preventDefault()
+    controlPage = 'receita'
+    trocaPagina()
+})
 
 val.addEventListener('keydown', function(event) {
     if (event.key === 'Enter') {
@@ -61,6 +72,36 @@ function envia(event) {
     val.focus()
 }
 
-function trocaPagina () {
-    if 
+function trocaPagina() {
+    console.log(controlPage)
+    console.log(pagto.value)
+    if (controlPage === 'despesa') {
+        pagto.value = 'debito'
+        formaPagto.style.display = 'flex'
+        tituloMain.textContent = 'Insira sua dívida'
+        val.placeholder = 'Ex: 50.75'
+        motivo.placeholder = 'Ex: Gasolina para moto'
+        btnReceita.style.fontSize = '1em'
+        btnDespesa.style.fontSize = '1.2em'
+        btnReceita.style.fontWeight = 'normal'
+        btnDespesa.style.fontWeight = 'bolder'
+        btnDespesa.style.color = '#8DE4F2'
+        btnReceita.style.color = '#ffffff'
+        btnDespesa.style.textDecoration = 'underline'
+        btnReceita.style.textDecoration = 'none'
+    } else if (controlPage === 'receita') {
+        pagto.value = 'pix'
+        formaPagto.style.display = 'none'
+        tituloMain.textContent = 'Insira sua receita'
+        val.placeholder = 'Ex: 1000,67'
+        motivo.placeholder = 'Ex: Salário quinto dia útil'
+        btnReceita.style.fontSize = '1.2em'
+        btnDespesa.style.fontSize = '1em'
+        btnReceita.style.fontWeight = 'bolder'
+        btnDespesa.style.fontWeight = 'normal'
+        btnReceita.style.color = '#8DE4F2'
+        btnDespesa.style.color = '#ffffff'
+        btnReceita.style.textDecoration = 'underline'
+        btnDespesa.style.textDecoration = 'none'
+    }
 }
