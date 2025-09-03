@@ -89,7 +89,6 @@ main::before {
     background: url(/imagens/fundo_tela.jpg) no-repeat center center;
     background-size: cover;
     z-index: -1; /* Coloca o pseudo-elemento atrás do conteúdo do main */
-    /* Controle a opacidade aqui */
     opacity: 0.95; /* Valor de 0 (transparente) a 1 (opaco) */
 }
 
@@ -250,6 +249,6 @@ footer {
 
     h2 {
         font-size: 1.5rem;
-    }
+    }    
 }
 
