@@ -5,6 +5,14 @@ let btnDespesa = document.querySelector('a#despesa')
 let btnReceita = document.querySelector('a#receita')
 let formaPagto = document.getElementById('combo-box')
 let tituloMain = document.querySelector('h2#titulo-main')
+let pagto = document.getElementById('tipo-pagamento')
+let txt = document.getElementById('teste')
+let dataInicio = new Date()
+let dia = String(dataInicio.getDate()).padStart(2, '0')
+let mes = String(dataInicio.getMonth() + 1).padStart(2, '0') //Em js os meses são de 0 a 11, por isso soma-se 1
+let ano = String(dataInicio.getFullYear())
+let dataFormatada = `${dia}/${mes}/${ano}`
+let dados = {}
 let controlPage = 'despesa'
 
 btnDespesa.addEventListener('click', (event) => {
@@ -31,14 +39,6 @@ motivo.addEventListener('keydown', function(event) {
     }    
 })
 
-let pagto = document.getElementById('tipo-pagamento')
-let txt = document.getElementById('teste')
-let dataInicio = new Date()
-let dia = String(dataInicio.getDate()).padStart(2, '0')
-let mes = String(dataInicio.getMonth() + 1).padStart(2, '0') //Em js os meses são de 0 a 11, por isso soma-se 1
-let ano = String(dataInicio.getFullYear())
-let dataFormatada = `${dia}/${mes}/${ano}`
-let dados = {}
 
 function envia(event) {
     if (val.value == '' || motivo.value == '') {
@@ -73,8 +73,8 @@ function envia(event) {
 }
 
 function trocaPagina() {
-    console.log(controlPage)
-    console.log(pagto.value)
+    // console.log(controlPage)
+    // console.log(pagto.value)
     if (controlPage === 'despesa') {
         pagto.value = 'debito'
         formaPagto.style.display = 'flex'
