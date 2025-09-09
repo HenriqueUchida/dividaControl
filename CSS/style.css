@@ -51,12 +51,6 @@ a:hover {
     opacity: 0.7;
 }
 
-.logo {
-    font-size: 24px;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-}
-
 nav {
     display: flex;
     justify-content: space-around;
@@ -153,10 +147,16 @@ form {
 .combo-box, .preenchimento {
     display: flex;
     flex-direction: column;
+    gap: 0.3rem;
 }
 
+#container-parcela {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
 label {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.5rem; 
     font-weight: 500;
     color: var(--label-color);
 }
@@ -208,6 +208,7 @@ select:focus {
 
 /* --- Área de Resultado --- */
 #teste {
+    display: none;
     margin-top: 1rem;
     padding: 1rem;
     background-color: #f9f9f9;
