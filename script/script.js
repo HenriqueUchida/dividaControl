@@ -5,7 +5,37 @@ let btnDespesa = document.querySelector('a#despesa')
 let btnReceita = document.querySelector('a#receita')
 let formaPagto = document.getElementById('combo-box')
 let tituloMain = document.querySelector('h2#titulo-main')
+let pagto = document.getElementById('tipo-pagamento')
+let txt = document.getElementById('teste')
+let containerParcela = document.getElementById('container-parcela')
+let qtdeParcelas = document.getElementById('qtde-parcelas')
+let radioAvista = document.getElementById('a-vista')
+let dataInicio = new Date()
+let dia = String(dataInicio.getDate()).padStart(2, '0')
+let mes = String(dataInicio.getMonth() + 1).padStart(2, '0') //Em js os meses são de 0 a 11, por isso soma-se 1
+let ano = String(dataInicio.getFullYear())
+let dataFormatada = `${dia}/${mes}/${ano}`
+let dados = {}
 let controlPage = 'despesa'
+
+containerParcela.style.display = 'none'
+qtdeParcelas.value = 1
+qtdeParcelas.style.display = 'none'
+radioAvista.checked = true
+
+pagto.addEventListener('change', function() {
+    console.log(pagto.value)
+    if (pagto.value === 'debito' || pagto.value === 'pix') {
+        containerParcela.style.display = 'none'
+        qtdeParcelas.value = 1
+        qtdeParcelas.style.display = 'none'
+        radioAvista.checked = true
+    } else {
+        containerParcela.style.display = 'flex'
+        containerParcela.style.gap = '1rem'
+        qtdeParcelas.style.display = 'block'
+    }
+})
 
 btnDespesa.addEventListener('click', (event) => {
     event.preventDefault()
@@ -31,14 +61,6 @@ motivo.addEventListener('keydown', function(event) {
     }    
 })
 
-let pagto = document.getElementById('tipo-pagamento')
-let txt = document.getElementById('teste')
-let dataInicio = new Date()
-let dia = String(dataInicio.getDate()).padStart(2, '0')
-let mes = String(dataInicio.getMonth() + 1).padStart(2, '0') //Em js os meses são de 0 a 11, por isso soma-se 1
-let ano = String(dataInicio.getFullYear())
-let dataFormatada = `${dia}/${mes}/${ano}`
-let dados = {}
 
 function envia(event) {
     if (val.value == '' || motivo.value == '') {
@@ -55,7 +77,9 @@ function envia(event) {
         return
     } else {
         dados.data = dataFormatada
+        dados.tipo = controlPage.toUpperCase()
         dados.pagamento = pagto.value.toUpperCase()
+        dados.parcelas = qtdeParcelas.value
         dados.valor = val.value
         dados.motivo = motivo.value.toUpperCase()
         txt.innerHTML = `
@@ -66,6 +90,7 @@ function envia(event) {
             <p><strong>Motivo:</strong> ${dados.motivo}</p>
         `
         alert(`até aqui deu certo - ${dataFormatada}`)
+        console.log(dados)
     } 
     val.value = ''
     motivo.value = ''
@@ -73,11 +98,12 @@ function envia(event) {
 }
 
 function trocaPagina() {
-    console.log(controlPage)
-    console.log(pagto.value)
+    // console.log(controlPage)
+    // console.log(pagto.value)
     if (controlPage === 'despesa') {
         pagto.value = 'debito'
         formaPagto.style.display = 'flex'
+        containerParcela.style.display = 'block'
         tituloMain.textContent = 'Insira sua dívida'
         val.placeholder = 'Ex: 50.75'
         motivo.placeholder = 'Ex: Gasolina para moto'
@@ -92,6 +118,7 @@ function trocaPagina() {
     } else if (controlPage === 'receita') {
         pagto.value = 'pix'
         formaPagto.style.display = 'none'
+        containerParcela.style.display = 'none'
         tituloMain.textContent = 'Insira sua receita'
         val.placeholder = 'Ex: 1000,67'
         motivo.placeholder = 'Ex: Salário quinto dia útil'
