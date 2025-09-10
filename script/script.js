@@ -36,10 +36,12 @@ function verificaRadio() {
         qtdeParcelas.value = 1
         qtdeParcelas.readOnly = true
         qtdeParcelas.style.cursor = 'not-allowed'
+        qtdeParcelas.style.backgroundColor = 'grey'
     } else if (pagto.value == 'credito' && radioAvista.checked != true) {
         qtdeParcelas.value = 2
         qtdeParcelas.readOnly = false
         qtdeParcelas.style.cursor = 'default'
+        qtdeParcelas.style.backgroundColor = 'none'
     }
 }
 
