@@ -4,28 +4,44 @@ let val = document.getElementById('campo-valor')
 let motivo = document.getElementById('campo-motivo')
 let btnDespesa = document.querySelector('a#despesa')
 let btnReceita = document.querySelector('a#receita')
-let formaPagto = document.getElementById('combo-box')
+let containerPagto = document.getElementById('combo-box')
 let tituloMain = document.querySelector('h2#titulo-main')
 let pagto = document.getElementById('tipo-pagamento')
 let txt = document.getElementById('teste')
+let modalidade = 'A vista'
 let containerParcela = document.getElementById('container-parcela')
 let qtdeParcelas = document.getElementById('qtde-parcelas')
 let radioAvista = document.getElementById('a-vista')
 let radioParcelado = document.querySelector('#parcelado')
+let categoria = document.querySelector('#categoria')
 let dataInicio = new Date()
 let dia = String(dataInicio.getDate()).padStart(2, '0')
 let mes = String(dataInicio.getMonth() + 1).padStart(2, '0') //Em js os meses são de 0 a 11, por isso soma-se 1
 let ano = String(dataInicio.getFullYear())
 let dataFormatada = `${dia}/${mes}/${ano}`
 let dados = {}
+let values = []  
+    //   "03/09/2025", dataFormatada
+    //   "despesa", tipo_transacao
+    //   "credito", forma_pagto 
+    //   "", modalidade
+    //   "", qtdeParcelas
+    //   "14", val
+    //   "salgado faculdade", motivo
+    //   "comida" categoria
+    
 let controlPage = 'despesa'
-window.addEventListener('load', inicoPadrao())
+window.addEventListener('load', inicoPadrao)
 
 function inicoPadrao() {
+    pagto.value = 'debito'
     containerParcela.style.display = 'none'
     qtdeParcelas.value = 1
     qtdeParcelas.style.display = 'none'
     radioAvista.checked = true
+    val.value = ''
+    motivo.value = ''
+    val.focus()
 }
 
 radioAvista.addEventListener('change', verificaRadio)
@@ -34,15 +50,20 @@ qtdeParcelas.addEventListener('click', aviso)
 
 function verificaRadio() {
     if(pagto.value == 'credito' && radioAvista.checked) {
+        modalidade = 'A vista'
+        console.log(modalidade)
         qtdeParcelas.value = 1
         qtdeParcelas.readOnly = true
         qtdeParcelas.style.cursor = 'not-allowed'
         qtdeParcelas.style.backgroundColor = 'lightgrey'
+        val.focus()
     } else if (pagto.value == 'credito' && radioAvista.checked != true) {
+        modalidade = 'Parcelado'
         qtdeParcelas.value = 2
         qtdeParcelas.readOnly = false
         qtdeParcelas.style.cursor = 'default'
         qtdeParcelas.style.backgroundColor = 'white'
+        qtdeParcelas.focus()
     }
 }
 
@@ -51,10 +72,12 @@ function verificaRadio() {
 pagto.addEventListener('change', function() {
     console.log(pagto.value)
     if (pagto.value === 'debito' || pagto.value === 'pix') {
+        modalidade = 'A vista'
         containerParcela.style.display = 'none'
         qtdeParcelas.value = 1
         qtdeParcelas.style.display = 'none'
         radioAvista.checked = true
+        val.focus()
     } else {
         verificaRadio()
         containerParcela.style.display = 'flex'
@@ -83,6 +106,12 @@ val.addEventListener('keydown', function(event) {
     }
 })
 
+qtdeParcelas.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        val.focus()
+    }
+})
+
 motivo.addEventListener('keydown', function(event) {
     if (event.key === 'Enter') {
         envia(event)
@@ -91,7 +120,7 @@ motivo.addEventListener('keydown', function(event) {
 
 
 function envia(event) {
-    if (val.value == '' || motivo.value == '') {
+    if (val.value == '' || motivo.value == '' || qtdeParcelas.value == '') {
         event.preventDefault()
         alert('Preencha todos os campos antes de enviar')
         txt.innerHTML = ''
@@ -101,31 +130,41 @@ function envia(event) {
             val.focus()
         } else if (val.value != '' && motivo.value == '') {
             motivo.focus()
+        } else if (qtdeParcelas == '') {
+            qtdeParcelas.focus()
         }
         return
-    } else {
+    } else if (radioAvista.checked != true && qtdeParcelas.value == 1) {
+        alert('[ERRO]Numero de parcela inválido!')
+        qtdeParcelas.value = 2
+        qtdeParcelas.focus()
+        return
+     } else {
         txt.style.display = 'block'
         dados.data = dataFormatada
         dados.tipo = controlPage.toUpperCase()
         dados.pagamento = pagto.value.toUpperCase()
+        dados.modalidade = modalidade.toUpperCase()
         dados.parcelas = qtdeParcelas.value
         dados.valor = val.value
         dados.motivo = motivo.value.toUpperCase()
+        dados.categoria = categoria.value.toUpperCase()
+        values.push(dataFormatada, controlPage.toUpperCase(), pagto.value.toUpperCase(), modalidade.toUpperCase(), qtdeParcelas.value, val.value, motivo.value.toUpperCase(), categoria.value.toUpperCase())
         txt.innerHTML = `
             <h3>Último Envio:</h3>
             <p><strong>Data:</strong> ${dados.data}</p>
             <p><strong>Tipo:</strong> ${dados.tipo}</p>
             <p><strong>Pagamento:</strong> ${dados.pagamento}</p>
+            <p><strong>Modalidade:</strong> ${dados.modalidade}</p>
             <p><strong>Parcelas:</strong> ${dados.parcelas}</p>
             <p><strong>Valor:</strong> ${dados.valor}</p>
             <p><strong>Motivo:</strong> ${dados.motivo}</p>
+            <p><strong>Categoria:</strong> ${dados.categoria}</p>
         `
         alert(`até aqui deu certo - ${dataFormatada}`)
-        console.log(dados)
+        console.log(qtdeParcelas.value)//, dados, values)
     } 
-    val.value = ''
-    motivo.value = ''
-    val.focus()
+    inicoPadrao()
 }
 
 function trocaPagina() {
@@ -133,7 +172,7 @@ function trocaPagina() {
     // console.log(pagto.value)
     if (controlPage === 'despesa') {
         pagto.value = 'debito'
-        formaPagto.style.display = 'flex'
+        containerPagto.style.display = 'flex'
         containerParcela.style.display = 'block'
         tituloMain.textContent = 'Insira sua dívida'
         val.placeholder = 'Ex: 50.75'
@@ -149,7 +188,7 @@ function trocaPagina() {
         inicoPadrao()
     } else if (controlPage === 'receita') {
         pagto.value = 'pix'
-        formaPagto.style.display = 'none'
+        containerPagto.style.display = 'none'
         containerParcela.style.display = 'none'
         tituloMain.textContent = 'Insira sua receita'
         val.placeholder = 'Ex: 1000,67'

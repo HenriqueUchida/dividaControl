@@ -144,7 +144,7 @@ form {
 }
 
 /* --- Estilos para os Campos e Labels --- */
-.combo-box, .preenchimento {
+.combo-box, .preenchimento, #container-categoria, #container-parcela, #container-cartoes, #container-qtde-parcelas {
     display: flex;
     flex-direction: column;
     gap: 0.3rem;
