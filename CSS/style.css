@@ -150,6 +150,17 @@ form {
     gap: 0.3rem;
 }
 
+#container-credito {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+#container-cartoes {
+     flex-grow: 1; /* Faz o select dos cartões ocupar o espaço em branco do space-between*/
+}
+
 #container-parcela {
     display: flex;
     flex-direction: column;

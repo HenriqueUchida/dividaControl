@@ -37,10 +37,19 @@
                         <input type="radio" name="parcela" id="parcelado">
                         <label for="parcelado">Parcelado</label>
                     </div>
-                
-                    <div id="container-qtde-parcelas">
-                        <label for="qtde-parcelas"><p>Quantidade de parcelas:</p></label>
-                        <input type="number" name="qtde-parcelas" id="qtde-parcelas" min="2" max="36" step="1">
+                    
+                    <div id="container-credito">
+                        <div id="container-cartoes">
+                            <label for="cartoes">Cartao:</label>
+                            <select name="cartoes" id="cartoes">
+                                <option value="nubank">Nubank</option>
+                                <option value="nubank">Mercado Pago</option>
+                            </select>
+                        </div>
+                        <div id="container-qtde-parcelas">
+                            <label for="qtde-parcelas"><p>Qtde de parcelas:</p></label>
+                            <input type="number" name="qtde-parcelas" id="qtde-parcelas" min="2" max="36" step="1">
+                        </div>
                     </div>
                 </div>
                 <div class="preenchimento">

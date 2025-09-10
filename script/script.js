@@ -1,3 +1,4 @@
+
 let enviar = document.querySelector('input#enviar').addEventListener('click', envia)
 let val = document.getElementById('campo-valor')
 let motivo = document.getElementById('campo-motivo')
@@ -10,6 +11,7 @@ let txt = document.getElementById('teste')
 let containerParcela = document.getElementById('container-parcela')
 let qtdeParcelas = document.getElementById('qtde-parcelas')
 let radioAvista = document.getElementById('a-vista')
+let radioParcelado = document.querySelector('#parcelado')
 let dataInicio = new Date()
 let dia = String(dataInicio.getDate()).padStart(2, '0')
 let mes = String(dataInicio.getMonth() + 1).padStart(2, '0') //Em js os meses são de 0 a 11, por isso soma-se 1
@@ -17,11 +19,31 @@ let ano = String(dataInicio.getFullYear())
 let dataFormatada = `${dia}/${mes}/${ano}`
 let dados = {}
 let controlPage = 'despesa'
+window.addEventListener('load', inicoPadrao())
 
-containerParcela.style.display = 'none'
-qtdeParcelas.value = 1
-qtdeParcelas.style.display = 'none'
-radioAvista.checked = true
+function inicoPadrao() {
+    containerParcela.style.display = 'none'
+    qtdeParcelas.value = 1
+    qtdeParcelas.style.display = 'none'
+    radioAvista.checked = true
+}
+
+radioAvista.addEventListener('change', verificaRadio)
+radioParcelado.addEventListener('change', verificaRadio)
+
+function verificaRadio() {
+    if(pagto.value == 'credito' && radioAvista.checked) {
+        qtdeParcelas.value = 1
+        qtdeParcelas.readOnly = true
+        qtdeParcelas.style.cursor = 'not-allowed'
+    } else if (pagto.value == 'credito' && radioAvista.checked != true) {
+        qtdeParcelas.value = 2
+        qtdeParcelas.readOnly = false
+        qtdeParcelas.style.cursor = 'default'
+    }
+}
+
+
 
 pagto.addEventListener('change', function() {
     console.log(pagto.value)
@@ -31,10 +53,13 @@ pagto.addEventListener('change', function() {
         qtdeParcelas.style.display = 'none'
         radioAvista.checked = true
     } else {
+        verificaRadio()
         containerParcela.style.display = 'flex'
         containerParcela.style.gap = '1rem'
         qtdeParcelas.style.display = 'block'
     }
+
+
 })
 
 btnDespesa.addEventListener('click', (event) => {
@@ -76,6 +101,7 @@ function envia(event) {
         }
         return
     } else {
+        txt.style.display = 'block'
         dados.data = dataFormatada
         dados.tipo = controlPage.toUpperCase()
         dados.pagamento = pagto.value.toUpperCase()
@@ -83,9 +109,11 @@ function envia(event) {
         dados.valor = val.value
         dados.motivo = motivo.value.toUpperCase()
         txt.innerHTML = `
-            <h3>Dados Enviados:</h3>
+            <h3>Último Envio:</h3>
             <p><strong>Data:</strong> ${dados.data}</p>
+            <p><strong>Tipo:</strong> ${dados.tipo}</p>
             <p><strong>Pagamento:</strong> ${dados.pagamento}</p>
+            <p><strong>Parcelas:</strong> ${dados.parcelas}</p>
             <p><strong>Valor:</strong> ${dados.valor}</p>
             <p><strong>Motivo:</strong> ${dados.motivo}</p>
         `
@@ -115,6 +143,7 @@ function trocaPagina() {
         btnReceita.style.color = '#ffffff'
         btnDespesa.style.textDecoration = 'underline'
         btnReceita.style.textDecoration = 'none'
+        inicoPadrao()
     } else if (controlPage === 'receita') {
         pagto.value = 'pix'
         formaPagto.style.display = 'none'
