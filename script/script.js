@@ -30,6 +30,7 @@ function inicoPadrao() {
 
 radioAvista.addEventListener('change', verificaRadio)
 radioParcelado.addEventListener('change', verificaRadio)
+qtdeParcelas.addEventListener('click', aviso)
 
 function verificaRadio() {
     if(pagto.value == 'credito' && radioAvista.checked) {
@@ -37,7 +38,6 @@ function verificaRadio() {
         qtdeParcelas.readOnly = true
         qtdeParcelas.style.cursor = 'not-allowed'
         qtdeParcelas.style.backgroundColor = 'lightgrey'
-        qtdeParcelas.addEventListener('click', alert('Impossível alterar parcela para pagamentos a vista!'))
     } else if (pagto.value == 'credito' && radioAvista.checked != true) {
         qtdeParcelas.value = 2
         qtdeParcelas.readOnly = false
@@ -162,5 +162,11 @@ function trocaPagina() {
         btnDespesa.style.color = '#ffffff'
         btnReceita.style.textDecoration = 'underline'
         btnDespesa.style.textDecoration = 'none'
+    }
+}
+
+function aviso() {
+    if(qtdeParcelas.readOnly === true) {
+        alert('Impossivel alterar parcela para pagamento em crédito a vista!')
     }
 }
