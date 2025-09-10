@@ -36,12 +36,13 @@ function verificaRadio() {
         qtdeParcelas.value = 1
         qtdeParcelas.readOnly = true
         qtdeParcelas.style.cursor = 'not-allowed'
-        qtdeParcelas.style.backgroundColor = 'grey'
+        qtdeParcelas.style.backgroundColor = 'lightgrey'
+        qtdeParcelas.addEventListener('click', alert('Impossível alterar parcela para pagamentos a vista!'))
     } else if (pagto.value == 'credito' && radioAvista.checked != true) {
         qtdeParcelas.value = 2
         qtdeParcelas.readOnly = false
         qtdeParcelas.style.cursor = 'default'
-        qtdeParcelas.style.backgroundColor = 'none'
+        qtdeParcelas.style.backgroundColor = 'white'
     }
 }
 
