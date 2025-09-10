@@ -1,0 +1,5 @@
+# Ignorar a pasta de credenciais
+credencial/
+
+# Ignorar dependências do Node.js
+node_modules/
