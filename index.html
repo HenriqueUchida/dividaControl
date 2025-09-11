@@ -10,7 +10,7 @@
 </head>
 <body>
     <header>
-        <h1>Controle Financeiro</h1>
+        <h1 id="titulo-cabecalho">Controle Financeiro</h1>
         <nav>
             <ul class="nav-list">
                 <li><a id="despesa" href="/">Despesas</a></li>
@@ -21,7 +21,7 @@
     <main>    
         <h2 id="titulo-main">Insira sua dívida</h2>
         <section>    
-            <form>
+             <form id="meu-formulario"> <!--action="" method="POST"-->
                 <div id="combo-box" class="combo-box">
                     <label for="tipo-pagamento"><p>Forma de Pagamento:</p></label>
                     <select name="tipo_pagamento" id="tipo-pagamento">
@@ -48,7 +48,7 @@
                         </div>
                         <div id="container-qtde-parcelas">
                             <label for="qtde-parcelas"><p>Nº Parcelas:</p></label>
-                            <input type="number" name="qtde-parcelas" id="qtde-parcelas" min="2" max="36" step="1">
+                            <input type="number" name="qtde-parcelas" id="qtde-parcelas" min="1" max="36" step="1">
                         </div>
                     </div>
                 </div>
@@ -72,7 +72,7 @@
                     </select>
                 </div>
                 <div class="botao">
-                    <input type="button" value="Enviar" id="enviar">
+                    <input type="submit" value="Enviar" id="enviar">
                 </div>
                 <div id="teste">
 
