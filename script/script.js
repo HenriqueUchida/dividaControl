@@ -24,15 +24,7 @@ let ano = String(dataInicio.getFullYear())
 let dataFormatada = `${dia}/${mes}/${ano}`
 let dados = {}
 let values = []  
-    //   "03/09/2025", dataFormatada
-    //   "despesa", tipo_transacao
-    //   "credito", forma_pagto 
-    //   "", modalidade
-    //   "", qtdeParcelas
-    //   "14", val
-    //   "salgado faculdade", motivo
-    //   "comida" categoria
-    
+
 let controlPage = 'despesa'
 window.addEventListener('load', inicoPadrao)
 
@@ -55,6 +47,7 @@ function verificaRadio() {
     if(pagto.value == 'credito' && radioAvista.checked) {
         modalidade = 'A vista'
         console.log(modalidade)
+        console.log(cartao.value)
         qtdeParcelas.value = 1
         qtdeParcelas.readOnly = true
         qtdeParcelas.style.cursor = 'not-allowed'
@@ -62,6 +55,7 @@ function verificaRadio() {
         val.focus()
     } else if (pagto.value == 'credito' && radioAvista.checked != true) {
         modalidade = 'Parcelado'
+        console.log(cartao.value)
         qtdeParcelas.value = 2
         qtdeParcelas.readOnly = false
         qtdeParcelas.style.cursor = 'default'
@@ -84,6 +78,7 @@ pagto.addEventListener('change', function() {
         val.focus()
     } else {
         verificaRadio()
+        cartao.value = 'nubank'
         containerParcela.style.display = 'flex'
         containerParcela.style.gap = '1rem'
         qtdeParcelas.style.display = 'block'
