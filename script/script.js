@@ -235,7 +235,8 @@ async function envia(event) {
                 <p><strong>Categoria:</strong> ${dados.categoria}</p>
             `
             alert(`até aqui deu certo - ${dataFormatada}`)
-            // console.log(values, dados, values)
+            console.log(values)
+            debugger
             enviar.submit()
         }
     const apiUrl = 'https://dividacontrol.onrender.com/addRow';        
