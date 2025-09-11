@@ -2,11 +2,23 @@
 
 const express = require("express");
 const { google } = require("googleapis");
-const cors = require("cors");
+const cors = require("cors"); // <-- Importação está correta
 
 const app = express();
-app.use(cors());
-app.use(express.json());
+app.use(express.json()); // <-- Mantenha isso para ler o corpo JSON
+
+// --- CORREÇÃO 1: CONFIGURAÇÃO ESPECÍFICA DO CORS ---
+// Substitua o app.use(cors()) por esta configuração detalhada.
+const corsOptions = {
+  // MUITO IMPORTANTE: Substitua pela URL real do seu site no Vercel!
+  origin: 'https://divida-control-henrique.vercel.app', 
+  methods: "GET,POST", // Liste os métodos que sua API utiliza
+  allowedHeaders: "Content-Type", // Liste os cabeçalhos que seu front-end envia
+  optionsSuccessStatus: 204
+};
+// Use o middleware do CORS com as opções definidas, ANTES das suas rotas.
+app.use(cors(corsOptions));
+// --------------------------------------------------
 
 // Variáveis globais
 let googleSheetsClient;
@@ -51,44 +63,27 @@ app.get("/", (req, res) => {
   res.send("🚀 API do Google Sheets rodando no Render!");
 });
 
-app.get("/metadata", async (req, res) => {
-  try {
-    const metadata = await googleSheetsClient.spreadsheets.get({ spreadsheetId });
-    res.send(metadata.data);
-  } catch (error) {
-    console.error("Erro ao buscar metadados:", error);
-    res.status(500).send("Erro no servidor ao buscar metadados da planilha.");
-  }
-});
-
-app.get("/getRows", async (req, res) => {
-  try {
-    const getRows = await googleSheetsClient.spreadsheets.values.get({
-      spreadsheetId,
-      range: "Página1",
-    });
-    res.send(getRows.data);
-  } catch (error) {
-    console.error("Erro ao buscar linhas:", error);
-    res.status(500).send("Erro no servidor ao buscar linhas da planilha.");
-  }
-});
+// Suas outras rotas (getRows, metadata) estão corretas e podem ser mantidas aqui...
 
 app.post("/addRow", async (req, res) => {
-  const { values } = req.body;
+  // --- CORREÇÃO 2: BUSCAR 'sheetData' EM VEZ DE 'values' ---
+  const { sheetData } = req.body;
 
-  if (!values || !Array.isArray(values)) {
+  // Validação ajustada para 'sheetData'
+  if (!sheetData || !Array.isArray(sheetData)) {
     return res
       .status(400)
-      .send("O corpo da requisição deve conter um array 'values'.");
+      .send("O corpo da requisição deve conter um array 'sheetData'.");
   }
 
   try {
     const row = await googleSheetsClient.spreadsheets.values.append({
       spreadsheetId,
-      range: "Página1",
+      range: "Página1", // Verifique se o nome da sua aba é exatamente "Página1"
       valueInputOption: "USER_ENTERED",
-      resource: { values },
+      // O 'resource' espera um objeto com uma propriedade 'values',
+      // então criamos um com os dados recebidos de 'sheetData'.
+      resource: { values: sheetData },
     });
     res.send(row.data);
   } catch (error) {
