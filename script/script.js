@@ -126,7 +126,8 @@ motivo.addEventListener('keydown', function(event) {
 })
 
 
-function envia(event) {
+async function envia(event) {
+    event.preventDefault()
     if (val.value == '' || motivo.value == '' || qtdeParcelas.value == '') {
         event.preventDefault()
         alert('Preencha todos os campos antes de enviar')
@@ -236,8 +237,40 @@ function envia(event) {
             alert(`até aqui deu certo - ${dataFormatada}`)
             // console.log(values, dados, values)
             enviar.submit()
-        } 
-    inicoPadrao()
+        }
+    const apiUrl = 'https://dividacontrol.onrender.com/addRow';        
+    try {
+        console.log("Enviando para a API:", JSON.stringify({ sheetData: values }));
+
+        // Faz a requisição POST para API
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ "sheetData": values }) 
+        });
+
+        // Se a resposta do servidor não for 'ok' (ex: erro 400 ou 500)
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || `Erro do servidor: ${response.status}`);
+        }
+
+        // Se a resposta for bem-sucedida
+        const result = await response.json();
+        console.log('Sucesso! Resposta da API:', result);
+        alert('Dados salvos com sucesso!');
+
+        // Limpa o formulário para o próximo lançamento
+        inicoPadrao();
+
+    } catch (error) {
+        // Se houver um erro de rede ou na lógica acima
+        console.error('Ocorreu um erro:', error);
+        alert(`Não foi possível salvar os dados. Erro: ${error.message}`);
+    }         
+    // inicoPadrao()
     
 }
 function trocaPagina() {
