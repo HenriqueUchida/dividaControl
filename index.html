@@ -3,87 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="shortcut icon" href="imagens/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="CSS/style.css">
-    <title>Controle Financeiro</title>
+    <title>Seja Bem Vindo!</title>
+    <link rel="stylesheet" href="./CSS/login.css">
 </head>
 <body>
-    <header>
-        <h1 id="titulo-cabecalho">Controle Financeiro</h1>
-        <nav>
-            <ul class="nav-list">
-                <li><a id="despesa" href="/">Despesas</a></li>
-                <li><a id="receita" href="/">Receitas</a></li>
-                <li><a id="receita" href="/"></a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>    
-        <h2 id="titulo-main">Insira sua dívida</h2>
-        <section>    
-             <form id="meu-formulario"> <!--action="" method="POST"-->
-                <div id="combo-box" class="combo-box">
-                    <label for="tipo-pagamento"><p>Forma de Pagamento:</p></label>
-                    <select name="tipo_pagamento" id="tipo-pagamento">
-                        <option value="debito">Débito</option>
-                        <option value="credito">Crédito</option>
-                        <option value="pix">Pix</option>
-                    </select> 
-                </div>
-                <div id="container-parcela">
-                    <div id="container-parcelamento">
-                        <input type="radio" name="parcela" id="a-vista" checked>
-                        <label for="a-vista">A vista</label>
-                        <input type="radio" name="parcela" id="parcelado">
-                        <label for="parcelado">Parcelado</label>
-                    </div>
-                    
-                    <div id="container-credito">
-                        <div id="container-cartoes">
-                            <label for="cartoes">Cartao:</label>
-                            <select name="cartoes" id="cartoes">
-                                <option value="nubank">Nubank</option>
-                                <option value="mercado pago">Mercado Pago</option>
-                            </select>
-                        </div>
-                        <div id="container-qtde-parcelas">
-                            <label for="qtde-parcelas"><p>Nº Parcelas:</p></label>
-                            <input type="number" name="qtde-parcelas" id="qtde-parcelas" min="1" max="36" step="1">
-                        </div>
-                    </div>
-                </div>
-                <div class="preenchimento">
-                    <label for="campo-valor"><p>Valor (R$): </p></label>
-                    <input type="number" id="campo-valor" name="valor" placeholder="Ex: 50.75" step="0.01" min="0">
-                </div>
-                <div class="preenchimento">
-                    <label for="campo-motivo"><p>Motivo:</p></label>
-                    <input type="text" name="motivo" id="campo-motivo" placeholder="Ex: Gasolina para moto">
-                </div>
-                <div id="container-categoria">
-                    <label for="categoria">Categoria:</label>
-                    <select name="categoria" id="categoria">
-                        <option value="comida">Comida</option>
-                        <option value="transporte">Transporte</option>
-                        <option value="saude">Saude</option>
-                        <option value="Roupa">Roupa</option>
-                        <option value="lazer">Lazer</option>
-                        <option value="outros">Outros</option>
-                    </select>
-                </div>
-                <div class="botao">
-                    <input type="submit" value="Enviar" id="enviar">
-                </div>
-                <div id="teste">
-
-                </div>
-            </form>
-        </section>
+    <main>
+        <form action="">
+            <div id="container-usuario">
+                <label for="usuario">Usuário:</label>
+                <input id="usuario" type="text">
+            </div>
+            <div id="container-senha">
+                <label for="senha">Senha:</label>
+                <input id="senha" type="password" autocomplete="off">
+            </div>
+            <input id="login" type="button" value="Login">
+        </form>
     </main>
     <footer>
             <p>&copy;Henrique Uchida - Controle Financeiro</p>
     </footer>
-    <script src="script/script.js"></script>
 </body>
 </html>

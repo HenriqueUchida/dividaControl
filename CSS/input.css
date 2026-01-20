@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+@theme {
+  /* É aqui que você adiciona a Poppins na v4 */
+  --font-poppins: "Poppins", sans-serif;
+};

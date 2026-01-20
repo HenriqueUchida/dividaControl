@@ -17,9 +17,10 @@
     --font-family: 'Poppins', sans-serif;
 }
 
+
 main {
-    height: 100vh;
-    width: 100vh;
+    height: 96.2vh;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -39,18 +40,21 @@ main::before {
 }
 
 form {
+    height: 400px;
+    width: 430px;
     background-color: var(--form-background);
     padding: 2rem;
     border-radius: 12px;
     box-shadow: 0 8px 25px var(--shadow-color);
     display: flex;
     flex-direction: column;
-    gap: 0.9rem;
+    justify-content: center;
+    gap: 2rem;
 }
 
 label {
     margin-bottom: 0.5rem; 
-    font-weight: 500;
+    font-weight: 700;
     color: var(--label-color);
 }
 
@@ -87,4 +91,12 @@ select:focus {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     /* --- NOVO AJUSTE --- */
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #333;
+    color: #ccc;
+    font-size: 0.9rem;
 }
