@@ -1,59 +1,3 @@
-var parametros = {
-    conteudoMenu: ['Inicio', 'Gastos Fixos', 'Lancamentos', 'Relatorios', 'Cadastros', 'Sair']
-};
-
-function criaEventos(e){
-    const menuLateral = document.querySelector('#menu-lateral');
-    const btnAbrir = document.querySelector('#btn-abrir');
-    const btnFechar = document.querySelector('#btn-fechar');
-    let containerBody = document.querySelector('body');
-    containerBody.addEventListener('click', (e) => {
-        if(e.target.matches('#btn-abrir')) {
-            menuLateral.classList.remove('-translate-x-full');
-            btnAbrir.style.display = 'none';
-        }
-        if(e.target.matches('#btn-fechar')){
-            menuLateral.classList.add('-translate-x-full');
-            btnAbrir.style.display = 'block';
-        }
-        if(e.target.matches('#inicio')){
-            inicioApp();
-        }
-        if(e.target.matches('#gastos-fixos')){
-            gastosFixos();
-        }
-        if(e.target.matches('#lancamentos')){
-            lancamentos();
-        }
-        if(e.target.matches('#cadastros')){
-            cadastros();
-        }
-        if(e.target.matches('#relatorios')){
-            relatorios();
-        }
-        if(e.target.matches('#sair')){
-            logout();
-        }
-    })
-}
-
-function criacaoMenu(){
-    let menu = document.querySelector('#menu-sistema');
-    let listaMenu = document.createElement('ul');
-    listaMenu.className = ('flex flex-col gap-3')
-    menu.appendChild(listaMenu);
-    parametros.conteudoMenu.forEach((item)=> {
-        let itemLista = document.createElement('li');
-        let botaoLista = document.createElement('a');
-        botaoLista.href = '#';
-        botaoLista.id = item.toLowerCase().replaceAll(" ", "-");
-        listaMenu.appendChild(itemLista);
-        itemLista.appendChild(botaoLista);
-
-        botaoLista.textContent = item;
-    })
-}
-
 function inicioApp(){
     console.log('Visualização inicial');
 }
@@ -77,6 +21,65 @@ function cadastros(){
 function logout(){
     console.log('Opção para deslogar do sistema');
 }
+
+var parametros = {
+    conteudoMenu: ['Inicio', 'Gastos Fixos', 'Lancamentos', 'Relatorios', 'Cadastros', 'Sair'],
+    menuLateral: document.querySelector('#menu-lateral'),
+    abrirMenu: document.querySelector('#btn-abrir'),
+    fecharMenu: document.querySelector('#btn-fechar'),
+    opcoesMenu: {
+        'inicio': inicioApp,
+        'gastos-fixos': gastosFixos,
+        'lancamentos': lancamentos,
+        'relatorios': relatorios,
+        'cadastros': cadastros,
+        'sair': logout
+    }
+};
+
+function criaEventos(e){
+    const containerBody = document.querySelector('body');
+    containerBody.addEventListener('click', (e) => {
+        const idClicado = e.target.id;
+        if(e.target.matches('#btn-abrir')) {
+            parametros.menuLateral.classList.remove('-translate-x-full');
+            parametros.abrirMenu.style.display = 'none';
+        }
+        if(e.target.matches('#btn-fechar') || e.target.matches('main')){
+            escondeMenu()
+        }
+        if (parametros.opcoesMenu[idClicado]) {
+            parametros.opcoesMenu[idClicado]();
+            escondeMenu();
+        }
+    })
+}
+
+function escondeMenu(){
+    parametros.menuLateral.classList.add('-translate-x-full');
+    parametros.abrirMenu.style.display = 'block';
+};
+
+function criacaoMenu(){
+    let menu = document.querySelector('#menu-sistema');
+    let listaMenu = document.createElement('ul');
+    listaMenu.className = ('flex flex-col gap-3')
+    menu.appendChild(listaMenu);
+    parametros.conteudoMenu.forEach((item)=> {
+        let itemLista = document.createElement('li');
+        let botaoLista = document.createElement('a');
+        botaoLista.href = '#';
+        botaoLista.id = item.toLowerCase().replaceAll(" ", "-");
+        listaMenu.appendChild(itemLista);
+        itemLista.appendChild(botaoLista);
+
+        botaoLista.textContent = item;
+    })
+}
+
+
+
+
 
 function iniciar(){
     criacaoMenu();
