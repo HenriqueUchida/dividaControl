@@ -1,9 +1,92 @@
+import { supabaseClient } from './api/client.js';
+
 function inicioApp(){
+    parametros.conteudoPrincipal.textContent = '';
+    const cardSaldo = document.createElement('section');
+    cardSaldo.id = 'card-saldo';
+    parametros.conteudoPrincipal.appendChild(cardSaldo);
+    const tituloSaldo = document.createElement('h2');
+    cardSaldo.appendChild(tituloSaldo);
+    tituloSaldo.textContent = 'Saldo Atual';
+    const containerSaldo = document.createElement('div');
+    containerSaldo.id = 'container-saldo';
+    cardSaldo.append(containerSaldo);
+    const txtSaldo = document.createElement('p');
+    txtSaldo.id = 'txt-saldo';
+    containerSaldo.appendChild(txtSaldo);
+    const cifrao = document.createElement('span');
+    cifrao.textContent = 'R$'
+    containerSaldo.appendChild(cifrao);
+    txtSaldo.textContent = '---'; //teste visual
+    cardSaldo.className ='flex flex-col items-center bg-white w-80 h-40 p-6 gap-2 rounded-xl shadow-lg cursor-pointer hover:scale-105 transition-transform animate-pulse';
+    containerSaldo.className = 'flex flex-row-reverse items-center gap-2';
+    tituloSaldo.className = 'text-gray-500 font-medium uppercase text-sm tracking-wider';
+    txtSaldo.className = 'text-4xl font-bold text-slate-800';
+    cifrao.className = 'text-xl font-semibold text-slate-400';
+                            
     console.log('Visualização inicial');
+
+    getSaldo();
 }
 
-function gastosFixos(){
-    console.log('Tela de manutenção dos gastos fixos');
+async function getSaldo() {
+    const txtSaldo = document.querySelector('#txt-saldo');
+    const cardSaldo = document.querySelector('#card-saldo');
+
+    try {
+        const {data: contas, error} = await supabaseClient
+        .from('conta_bancaria')
+        .select('desc_conta, saldo');
+
+        if (error) throw error;
+        console.log(contas)
+        // Soma todos os saldos
+        const total = contas.reduce((acc, conta) => acc + (conta.saldo || 0), 0);
+
+        // Formata apenas o número para o seu elemento <p>
+        txtSaldo.textContent = total.toLocaleString('pt-BR', { 
+            minimumFractionDigits: 2, 
+            maximumFractionDigits: 2 
+        });
+
+        // Remove a animação de carregamento
+        cardSaldo.classList.remove('animate-pulse');
+        cardSaldo.classList.add('border-t-4', 'border-blue-600');
+
+    } catch (err) {
+        console.error('Erro ao popular saldo:', err);
+        txtSaldo.textContent = 'Erro';
+    }
+    
+}
+
+function gastosFixos(natureza, lancamentos){
+    parametros.conteudoPrincipal.textContent = '';
+    const cardGastoFixo = document.createElement('section');
+    cardGastoFixo.id = 'container-gastos-fixos';
+    const tituloTela = document.createElement('h1');
+    tituloTela.textContent = 'GASTOS FIXOS';
+    parametros.conteudoPrincipal.appendChild(tituloTela);
+    parametros.conteudoPrincipal.appendChild(cardGastoFixo);
+    
+    
+    parametros.natureza.forEach(natureza => {
+        const containerNatureza = document.createElement('div');
+        containerNatureza.id = `container-${natureza}`;
+        cardGastoFixo.appendChild(containerNatureza);
+        const tituloNatureza = document.createElement('h2');
+        containerNatureza.appendChild(tituloNatureza);
+        tituloNatureza.id = `cabecalho-${natureza}`;
+        tituloNatureza.textContent = `${natureza}`;
+        containerNatureza.className = ''
+    });
+
+
+
+}
+
+async function getGastosFixos(){
+    
 }
 
 function lancamentos(){
@@ -34,7 +117,9 @@ var parametros = {
         'relatorios': relatorios,
         'cadastros': cadastros,
         'sair': logout
-    }
+    },
+    conteudoPrincipal: document.querySelector('main'),
+    natureza: ['Receitas', 'Despesas']
 };
 
 function criaEventos(e){
@@ -45,7 +130,7 @@ function criaEventos(e){
             parametros.menuLateral.classList.remove('-translate-x-full');
             parametros.abrirMenu.style.display = 'none';
         }
-        if(e.target.matches('#btn-fechar') || e.target.matches('main')){
+        if(e.target.matches('#btn-fechar') || (e.target.matches('main'))){
             escondeMenu()
         }
         if (parametros.opcoesMenu[idClicado]) {
@@ -56,8 +141,12 @@ function criaEventos(e){
 }
 
 function escondeMenu(){
-    parametros.menuLateral.classList.add('-translate-x-full');
-    parametros.abrirMenu.style.display = 'block';
+    const mobile = window.innerWidth < 1024;
+    const menuHidden = parametros.menuLateral.classList.contains('hidden') || !parametros.menuLateral.classList.contains('-translate-x-full')
+    if(mobile && menuHidden){
+        parametros.menuLateral.classList.add('-translate-x-full');
+        parametros.abrirMenu.style.display = 'block';
+    }
 };
 
 function criacaoMenu(){
@@ -84,6 +173,7 @@ function criacaoMenu(){
 function iniciar(){
     criacaoMenu();
     criaEventos();
+    // inicioApp()
 };
 
 iniciar();

@@ -78,7 +78,7 @@ select:focus {
     box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.2);
 }
 
-#login {
+#enviar {
     width: 100%;
     padding: 0.9rem;
     border: none;
