@@ -2,11 +2,18 @@ import { supabaseClient } from './api/client.js';
 
 const usuarioForm = document.getElementById('usuario');
 const senhaForm = document.getElementById('senha');
-const enviar = document.getElementById('enviar')
+const enviar = document.getElementById('enviar');
 
-enviar.addEventListener('click', async (e)=> {
-    e.preventDefault();
+senhaForm.addEventListener('keydown', (event) => {
+    if(event.key === 'Enter'){
+        login(event);
+    }
+});
 
+enviar.addEventListener('click', login);
+
+async function login(event){
+    event.preventDefault();
     const usuario = usuarioForm.value;
     const senha = senhaForm.value;
 
@@ -21,4 +28,4 @@ enviar.addEventListener('click', async (e)=> {
         console.log('Seja bem vindo!', data.user);
         window.location.href = './html/aplicacao.html'
     }
-})
+};
