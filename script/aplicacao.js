@@ -18,11 +18,10 @@ function inicioApp(){
     cifrao.textContent = 'R$'
     containerSaldo.appendChild(cifrao);
     txtSaldo.textContent = '---'; //teste visual
-    cardSaldo.className ='flex flex-col items-center bg-white w-80 h-40 p-6 gap-2 rounded-xl shadow-lg cursor-pointer hover:scale-105 transition-transform animate-pulse';
-    containerSaldo.className = 'flex flex-row-reverse items-center gap-2';
-    tituloSaldo.className = 'text-gray-500 font-medium uppercase text-sm tracking-wider';
-    txtSaldo.className = 'text-4xl font-bold text-slate-800';
-    cifrao.className = 'text-xl font-semibold text-slate-400';
+    cardSaldo.className ='bg-white w-full max-w-sm p-8 rounded-3xl shadow-sm border-t-4 border-blue-600 flex flex-col items-center gap-3 hover:shadow-xl transition-all cursor-pointer animate-pulse';containerSaldo.className = 'flex flex-row-reverse items-baseline gap-1';
+    tituloSaldo.className = 'text-slate-400 font-black uppercase text-[10px] tracking-[0.2em]';
+    txtSaldo.className = 'text-5xl font-black text-slate-800 tracking-tighter';
+    cifrao.className = 'text-lg font-bold text-slate-300';
                             
 
 
@@ -64,12 +63,12 @@ function gastosFixos(){
     const cardGastoFixo = document.createElement('section');
     cardGastoFixo.id = 'container-gastos-fixos';
     const tituloTela = document.createElement('h1');
-    tituloTela.textContent = 'GASTOS FIXOS';
+    tituloTela.textContent = 'FIXOS';
     parametros.conteudoPrincipal.appendChild(tituloTela);
     parametros.conteudoPrincipal.appendChild(cardGastoFixo);
 
-    cardGastoFixo.className = 'grid grid-cols-1 lg:grid-cols-2 gap-8 w-full max-w-7xl mx-auto mt-8'
-    tituloTela.className = 'text-3xl font-black text-slate-800 tracking-tight mb-2'
+    cardGastoFixo.className = 'grid grid-cols-1 lg:grid-cols-2 gap-8 w-full mt-4';
+    tituloTela.className = 'text-4xl font-black text-slate-800 tracking-tight self-start';
     
     
     parametros.natureza.forEach(natureza => {
@@ -84,12 +83,10 @@ function gastosFixos(){
         const listaLancamentos = document.createElement('ul');
         listaLancamentos.id = `lista-${natureza.toLowerCase()}`;
         containerNatureza.appendChild(listaLancamentos);
-        containerNatureza.className = 'w-100'
+        // containerNatureza.className = 'w-screen'
 
-        tituloNatureza.className = 'text-2xl'
+        tituloNatureza.className = 'text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-6 block border-b pb-2';
     });
-
-    
 
     getGastosFixos();
 
@@ -104,52 +101,65 @@ async function getGastosFixos(){
     if(error) throw error;
 
     console.log(lctos_fixos);
+    const listaReceita = document.querySelector('#lista-receitas');
+    const listaDespesa = document.querySelector('#lista-despesas');
+    let contadorReceita = 1;
+    let contadorDespesa = 1;
 
-    lctos_fixos.forEach((lancamento, index)=>{
+    lctos_fixos.forEach((lancamento)=>{
+        const isReceita = lancamento.natureza === 'R';
+        const corBorda = isReceita ? 'border-emerald-500' : 'border-rose-500';
+        const corValor = isReceita ? 'text-emerald-600' : 'text-rose-600';
+        
+        const descricaoRegistro = lancamento.descricao;
+        const valorRegistro = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(lancamento.valor_fixo);
+        const diaVencimento = lancamento.dia_vencimento;
+        
+        const elementoLista = document.createElement('li');
+        const conteudoLista = document.createElement('div');
+        const tituloConteudo = document.createElement('h3');
+        tituloConteudo.textContent = descricaoRegistro;
+
+        conteudoLista.appendChild(tituloConteudo);
+        elementoLista.appendChild(conteudoLista);
+
+        const containerVencimento = document.createElement('div');
+        const txtInformativoDia = document.createElement('div');
+        const txtDiaVencimento = document.createElement('div');
+        conteudoLista.appendChild(containerVencimento);
+        containerVencimento.appendChild(txtInformativoDia);
+        containerVencimento.appendChild(txtDiaVencimento);
+        txtDiaVencimento.textContent = diaVencimento;
+
+
+        const containerValor = document.createElement('div');
+        const txtValorLancamento = document.createElement('div');
+        conteudoLista.appendChild(containerValor);
+        containerValor.appendChild(txtValorLancamento);
+        txtValorLancamento.textContent = valorRegistro;
+
         if(lancamento.natureza === 'R'){
-            const descricaoReceita = lancamento.descricao;
-            const valorReceita = lancamento.valor_fixo;
-            const diaRecebimento = lancamento.dia_vencimento;
+            txtInformativoDia.textContent = 'Recebo dia:'
+            listaReceita.appendChild(elementoLista);
+            elementoLista.id = `card-receita-${contadorReceita++}`;
 
-            const listaReceita = document.querySelector('#lista-receitas');
-            const elementoReceita = document.createElement('li');
-            const conteudoReceita = document.createElement('div');
-            conteudoReceita.id = `conteudo-card-${index+1}`
-            elementoReceita.appendChild(conteudoReceita);
-
-            const tituloReceita = document.createElement('h3');
-            tituloReceita.id = `titulo-card-${index+1}`
-            tituloReceita.textContent = `${descricaoReceita}`;
-            conteudoReceita.appendChild(tituloReceita);
-
-            const containerDiaRec = document.createElement('div');
-            containerDiaRec.id = `container-dia-rec-${index+1}`;
-            const txtDiaRecebim = document.createElement('p');
-            txtDiaRecebim.textContent = "Recebo dia"; 
-            containerDiaRec.appendChild(txtDiaRecebim);
-            containerDiaRec.innerHTML +=`<p id="dia-receb-card-${index+1}" class="w-fit">${diaRecebimento}</p>`;
-            conteudoReceita.appendChild(containerDiaRec);
-            containerDiaRec.className = 'flex flex-col items-center'
-
-
-            const containerValRec = document.createElement('div');
-            containerValRec.id = `container-val-rec-card-${index+1}`;
-            containerValRec.className = 'flex flex-col items-center';
-            const txtValReceita = document.createElement('p');
-            txtValReceita.textContent = "Valor"; 
-            containerValRec.appendChild(txtValReceita);
-            containerValRec.innerHTML += `<p id="dia-receb-card-${index+1}" class="w-fit">${valorReceita}</p>`;
-            conteudoReceita.appendChild(containerValRec);
-
-            listaReceita.appendChild(elementoReceita);
-
-            elementoReceita.className = `flex flex-col bg-white rounded-lg`
-
-            conteudoReceita.className = 'grid grid-cols-2 gap-1';
-            tituloReceita.className = 'col-span-2 text-center';
-            
-
+        } else if(lancamento.natureza === 'D') {
+            txtInformativoDia.textContent = 'Vence dia:'
+            listaDespesa.appendChild(elementoLista);
+            elementoLista.id = `card-despesa-${contadorDespesa++}`;
         }
+        elementoLista.className = `bg-white p-7 mb-6 rounded-3xl shadow-sm border-t-4 ${corBorda} grid grid-cols-2 gap-y-6 hover:scale-[1.03] transition-all duration-300`;
+        conteudoLista.className = 'col-span-2 text-center border-b border-slate-50 pb-4';
+        tituloConteudo.className = 'text-sm font-black text-slate-700 uppercase tracking-widest';
+        containerVencimento.className = 'flex flex-col items-start';
+        txtInformativoDia.className = 'text-[9px] font-black text-slate-300 uppercase';
+        txtDiaVencimento.className = 'text-sm font-bold text-slate-500 bg-slate-50 px-3 py-1 rounded-full';
+        
+        containerValor.className = 'flex flex-col items-end';
+        txtValorLancamento.className = `text-2xl font-black ${corValor} font-mono tracking-tighter`;
+
+        
+        
     })
 }
 
@@ -209,15 +219,16 @@ function criaEventos(e){
     const containerBody = document.querySelector('body');
     containerBody.addEventListener('click', (e) => {
         const idClicado = e.target.id;
-        if(e.target.matches('#btn-abrir')) {
+        if(e.target.closest('#btn-abrir')) {
             parametros.menuLateral.classList.remove('-translate-x-full');
             parametros.abrirMenu.style.display = 'none';
         }
-        if(e.target.matches('#btn-fechar') || (e.target.matches('main'))){
+        if(e.target.closest('#btn-fechar') || (e.target.matches('main')) || (e.target.matches('main *'))){
             escondeMenu()
         }
-        if (parametros.opcoesMenu[idClicado]) {
-            parametros.opcoesMenu[idClicado]();
+        const link = e.target.closest('a');
+        if (link && parametros.opcoesMenu[link.id]) {
+            parametros.opcoesMenu[link.id]();
             escondeMenu();
         }
     })
