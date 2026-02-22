@@ -35,7 +35,7 @@ var parametros = {
         }
     },
     tipoPagto: ['DÉBITO', 'CRÉDITO', 'PIX'],
-    natureza: ['receitas', 'despesas'],
+    natureza: ['Receitas', 'Despesas'],
     conteudoPrincipal: document.querySelector('main'),
     menuLateral: document.querySelector('#menu-lateral'),
     abrirMenu: document.querySelector('#btn-abrir'),
@@ -44,9 +44,7 @@ var parametros = {
 
 
 
-function criaEventos(e){
-    const menuLateral = document.querySelector('#menu-lateral');
-    const abrirMenu = document.querySelector('#btn-abrir');
+function criaEventos(){
     document.querySelector('body').addEventListener('click', (e) => {
         if(e.target.closest('#btn-abrir')) {
             parametros.menuLateral.classList.remove('-translate-x-full');
@@ -69,8 +67,9 @@ function criaEventos(e){
 function iniciar(){
     criacaoMenu(parametros);
     criaEventos();
-    inicioApp(parametros);
+    // inicioApp(parametros);
     // gastosFixos()
+    lancamentos(parametros);
 };
 
 iniciar();
