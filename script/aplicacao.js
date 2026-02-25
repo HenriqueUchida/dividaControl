@@ -2,7 +2,7 @@ import { supabaseClient } from "./api/client.js"
 import {criacaoMenu, escondeMenu} from "./utilidades/menu.js"
 import {inicioApp} from "./modulos/inicio.js"
 import {gastosFixos} from "./modulos/fixos.js"
-import {lancamentos} from "./modulos/lancamentos.js"
+import {renderizaLancamentos} from "./modulos/lancamentos.js"
 import {cadastros} from "./modulos/cadastros.js"
 import {relatorios} from "./modulos/relatorios.js"
 import {logout} from "./modulos/logout.js"
@@ -19,7 +19,7 @@ var parametros = {
         },
         'lancamentos': {
             texto: 'Lançamentos',
-            acao: () => lancamentos(parametros)
+            acao: () => renderizaLancamentos(parametros)
         },
         'cadastros': {
             texto: 'Cadastros',
@@ -69,7 +69,7 @@ function iniciar(){
     criaEventos();
     // inicioApp(parametros);
     // gastosFixos()
-    lancamentos(parametros);
+    renderizaLancamentos(parametros);
 };
 
 iniciar();

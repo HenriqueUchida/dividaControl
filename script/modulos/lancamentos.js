@@ -1,4 +1,4 @@
-export function lancamentos(parametros){
+export function renderizaLancamentos(parametros){
     parametros.conteudoPrincipal.textContent = '';
     const containerLancamento = document.createElement('section');
     containerLancamento.id = 'container-lancamento';
@@ -16,6 +16,7 @@ export function lancamentos(parametros){
     //     listaMenu.append(opcaoMenu);
     // });
     const formLancamento = document.createElement('form');
+    containerLancamento.appendChild(formLancamento);
     
 }
 
