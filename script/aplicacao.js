@@ -34,8 +34,8 @@ var parametros = {
             acao: () => logout(parametros)
         }
     },
-    tipoPagto: ['DÉBITO', 'CRÉDITO', 'PIX'],
-    natureza: ['Receitas', 'Despesas'],
+    // tipoPagto: ['DÉBITO', 'CRÉDITO', 'PIX'],
+    // natureza: ['Receitas', 'Despesas'],
     conteudoPrincipal: document.querySelector('main'),
     menuLateral: document.querySelector('#menu-lateral'),
     abrirMenu: document.querySelector('#btn-abrir'),
