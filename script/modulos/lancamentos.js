@@ -13,11 +13,13 @@ var elementosForm = {
         conteudo:{    
             despesa: {
                 texto: 'Despesa',
-                dataset: 'D'
+                dataset: 'D',
+                value: 'despesa'
             },
             receita: {
                 texto: 'Receita',
-                dataset: 'R'
+                dataset: 'R',
+                value: 'receita'
             }}
     },
     formaPagto: {
@@ -74,6 +76,9 @@ export function renderizaLancamentos(parametros){
     const formLancamento = document.createElement('form');
     formLancamento.id = 'form-lancamento';
     containerLancamento.appendChild(formLancamento);
+
+    
+
     const containerMovimento = document.createElement('div');
     formLancamento.appendChild(containerMovimento);
     containerMovimento.id = 'container-tipo-movimento';
@@ -89,7 +94,10 @@ export function renderizaLancamentos(parametros){
     constroiSelect(containerMeiosPagto, Object.entries(elementosForm.meioPagto.conteudo), elementosForm.meioPagto.id, elementosForm.meioPagto.label);
     const idFormaPagto = document.getElementById('forma-pagamento');
     
+    
+    eventoForm(formLancamento);
     idFormaPagto.addEventListener('change', (e) => {
+        // console.log(e.target.value);
         opcoesMeiosPagto(e.target.value);
     });
     opcoesMeiosPagto(idFormaPagto.value);
@@ -119,6 +127,10 @@ export function renderizaLancamentos(parametros){
     inputObs.setAttribute('type', 'text');
     labelObs.setAttribute('for', 'entrada-observacao');
 
+    const btnLancar = document.createElement('button');
+    btnLancar.id = 'enviar-form';
+    btnLancar.textContent = 'Lançar';
+    containerLancamento.appendChild(btnLancar);
     
 }
 
@@ -141,7 +153,7 @@ function constroiSelect(container, objeto, id, label){
         })
 }   
 
-function opcoesMeiosPagto(formaSelecionada, label) {
+function opcoesMeiosPagto(formaSelecionada) {
     const selectMeioPagto = document.getElementById('meio-pagamento');
     const labelMeioPagto = document.getElementById('label-meio-pagamento');
     selectMeioPagto.innerHTML = '';
@@ -164,8 +176,19 @@ function opcoesMeiosPagto(formaSelecionada, label) {
     })
 }
 
-
-export function iniciaLancamento() {
-    renderizaLancamentos();
-    eventoForm();
+function eventoForm(containerForm) {
+    const tipoMov = containerForm.children[0];
+    const tipoPagto = containerForm.children[1];
+    const meioPagto = containerForm.children[2];
+    
+    containerForm.addEventListener('change', (e)=>{
+        
+        if(e.target.id == 'tipo-movimento' && e.target.value == 'receita'){
+            tipoPagto.style.display = 'none';
+            console.log(tipoPagto);
+        } else if (e.target.id == 'tipo-movimento' && e.target.value == 'despesa'){
+            tipoPagto.style.display = 'block'
+        }
+        // console.log(e.target.id, e.target.value)
+    })
 }
