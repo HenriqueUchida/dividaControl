@@ -62,8 +62,6 @@ function criaEventos(){
     })
 }
 
-
-
 function iniciar(){
     criacaoMenu(parametros);
     criaEventos();

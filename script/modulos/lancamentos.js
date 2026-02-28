@@ -1,11 +1,14 @@
 import {getCartao} from "../utilidades/buscaCartao.js"
 import {getConta} from "../utilidades/buscaConta.js"
 
+const cartoes = await getCartao();
+const contas = await getConta();
+
 var elementosForm = {
     tipoMovimento: {
         id: 'tipo-movimento',
         tipo: 'select',
-        label: 'Tipo de Movimentação',
+        label: 'Tipo de Movimentação: ',
         // conteudo: ['Despesa', 'Receita']
         conteudo:{    
             despesa: {
@@ -20,31 +23,48 @@ var elementosForm = {
     formaPagto: {
         id: 'forma-pagamento',
         tipo: 'select',
-        label: 'Tipo de Pagamento',
+        label: 'Tipo de Pagamento: ',
         conteudo: {
-            debito: {
-                texto: 'Débito',
-                dataset: 'DEBITO'
-            }, 
             credito: {
                 texto: 'Crédito',
-                dataset: 'CREDITO'
+                dataset: 'CREDITO',
+                value: 'credito'
+            }, 
+            debito: {
+                texto: 'Débito',
+                dataset: 'DEBITO',
+                value: 'debito'
             }, 
             pix: {
                 texto: 'Pix',
-                dataset: 'PIX'
+                dataset: 'PIX',
+                value: 'pix'
             }
         }
+    },
+    meioPagto: {
+        id: 'meio-pagamento',
+        tipo: 'select',
+        label: 'Cartão: ',
+        conteudo: {
+            debito: {
+                fonte: contas,
+                value: contas
+            }, 
+            pix: {
+                fonte: contas,
+                value: contas
+            }, 
+            credito: {
+                fonte: cartoes,
+                value: cartoes
+            }, 
+        }
     }
+
 }
 
-const cartoes = await getCartao();
-const contas = await getConta();
 
-console.log(Object.entries(elementosForm.tipoMovimento.conteudo))
-Object.entries(elementosForm.tipoMovimento.conteudo).forEach(([batatinha, item]) =>{
-    console.log(batatinha)
-})
 
 export function renderizaLancamentos(parametros){
     parametros.conteudoPrincipal.textContent = '';
@@ -52,25 +72,100 @@ export function renderizaLancamentos(parametros){
     containerLancamento.id = 'container-lancamento';
     parametros.conteudoPrincipal.appendChild(containerLancamento);
     const formLancamento = document.createElement('form');
+    formLancamento.id = 'form-lancamento';
     containerLancamento.appendChild(formLancamento);
     const containerMovimento = document.createElement('div');
     formLancamento.appendChild(containerMovimento);
-    const txtTipoMovimento = document.createElement('label');
-    txtTipoMovimento.textContent = 'Tipo de Movimentação:'
-    containerMovimento.appendChild(txtTipoMovimento);
-    const boxTipoMovimento = document.createElement('select');
-    boxTipoMovimento.id = elementosForm.tipoMovimento.id
-    containerMovimento.appendChild(boxTipoMovimento);
-    // elementosForm.tipoMovimento.conteudo.forEach((opcao) =>{
-    //     console.log(opcao);
+    containerMovimento.id = 'container-tipo-movimento';
+    constroiSelect(containerMovimento, Object.entries(elementosForm.tipoMovimento.conteudo), elementosForm.tipoMovimento.id, elementosForm.tipoMovimento.label);
+    const containerFormaPagto = document.createElement('div');
+    formLancamento.appendChild(containerFormaPagto);
+    containerFormaPagto.id = 'container-forma-pagamento';
+    constroiSelect(containerFormaPagto, Object.entries(elementosForm.formaPagto.conteudo), elementosForm.formaPagto.id, elementosForm.formaPagto.label);
 
-    //     // const opcaoTipoMov = document.createElement('option');
-    //     // opcaoTipoMov.textContent = opcao;
-    //     // boxTipoMovimento.appendChild(opcaoTipoMov);
-    // })
+    const containerMeiosPagto = document.createElement('div');
+    formLancamento.appendChild(containerMeiosPagto);
+    containerMeiosPagto.id = 'container-meio-pagamento';
+    constroiSelect(containerMeiosPagto, Object.entries(elementosForm.meioPagto.conteudo), elementosForm.meioPagto.id, elementosForm.meioPagto.label);
+    const idFormaPagto = document.getElementById('forma-pagamento');
+    
+    idFormaPagto.addEventListener('change', (e) => {
+        opcoesMeiosPagto(e.target.value);
+    });
+    opcoesMeiosPagto(idFormaPagto.value);
+
+
+    const containerValor = document.createElement('div');
+    formLancamento.appendChild(containerValor);
+    const labelValor = document.createElement('label');
+    containerValor.appendChild(labelValor);
+    labelValor.textContent = 'Valor (R$): ';
+    const inputValor = document.createElement('input');
+    containerValor.appendChild(inputValor);
+    inputValor.id = 'entrada-valor';
+    inputValor.setAttribute('type', 'number');
+    inputValor.setAttribute('min', 0.01);
+    inputValor.setAttribute('step', 0.01);
+    labelValor.setAttribute('for', 'entrada-valor');
+
+    const containerObs = document.createElement('div');
+    formLancamento.appendChild(containerObs);
+    const labelObs = document.createElement('label');
+    containerObs.appendChild(labelObs);
+    labelObs.textContent = 'Observações: ';
+    const inputObs = document.createElement('input');
+    containerObs.appendChild(inputObs);
+    inputObs.id = 'entrada-observacao'
+    inputObs.setAttribute('type', 'text');
+    labelObs.setAttribute('for', 'entrada-observacao');
+
     
 }
 
-function constroiSelect(campo){
-    return
+function constroiSelect(container, objeto, id, label){
+    const criaSelect = document.createElement('select');
+    const criaLabel = document.createElement('label');
+    criaLabel.textContent = label;
+    criaLabel.setAttribute('for', id)
+    criaSelect.id = id;
+    criaLabel.id = `label-${id}`;
+    container.appendChild(criaLabel);
+    container.appendChild(criaSelect);
+    if(id != elementosForm.meioPagto.id)    
+        objeto.forEach(([chave, valores]) => {
+            const criaOption = document.createElement('option');
+            criaSelect.appendChild(criaOption);
+            criaOption.value = valores.value;
+            criaOption.dataset.tipo = valores.dataset;
+            criaOption.textContent = valores.texto;
+        })
 }   
+
+function opcoesMeiosPagto(formaSelecionada, label) {
+    const selectMeioPagto = document.getElementById('meio-pagamento');
+    const labelMeioPagto = document.getElementById('label-meio-pagamento');
+    selectMeioPagto.innerHTML = '';
+
+    let dados = [];
+
+    if (formaSelecionada === 'credito'){
+        dados = cartoes;
+        labelMeioPagto.textContent = 'Cartão: '
+    } else {
+        dados = contas;
+        labelMeioPagto.textContent = 'Conta: '
+    }
+
+    dados.forEach(item => {
+        const option = document.createElement('option');
+        option.value = item.id_cartao || item.id_conta; 
+        option.textContent = item.descr_cartao || item.descr_conta
+        selectMeioPagto.appendChild(option);
+    })
+}
+
+
+export function iniciaLancamento() {
+    renderizaLancamentos();
+    eventoForm();
+}
