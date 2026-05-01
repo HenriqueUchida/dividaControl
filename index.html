@@ -4,17 +4,80 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seja Bem Vindo!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="./imagens/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="./CSS/login.css">
+    <link rel="stylesheet" href="./CSS/index.css">
 </head>
 <body>
-    
+    <header id="cabecalho-pagina">
+        <h1>Controle Financeiro</h1>
+    </header>
     <main>
-
+        <section id="conteudo-pagina">
+            <header id="cabecalho-conteudo">
+                <h2 id="titulo-conteudo">Visão Geral</h2>
+                <div id="box-periodo">
+                    <button id="btn-voltar-periodo">&lt</button>
+                    <p>Maio 2026</p>
+                    <button id="btn-avancar-periodo">&gt</button>
+                </div>
+            </header>
+            <section id="container-resumo">
+                <div id="card-receita" class="card">
+                    <h3 id="titulo-card-receita" class="titulo-card">RECEITAS</h3>
+                    <p id="info-receita" class="info-card">R$ 1000,00</p>
+                    <footer id="rodape-receita" class="rodape-card">vs mês anterior</footer>
+                </div>
+                <div id="card-despesa" class="card">
+                    <h3 id="titulo-card-despesa" class="titulo-card">DESPESAS</h3>
+                    <p id="info-despesa" class="info-card">R$ 500,00</p>
+                    <footer id="rodape-despesa" class="rodape-card">vs mês anterior</footer>
+                </div>
+                <div id="card-saldo" class="card">
+                    <h3 id="titulo-card-saldo" class="titulo-card">SALDO</h3>
+                    <p id="info-saldo" class="info-card">R$ 500,00</p>
+                    <footer id="rodape-saldo" class="rodape-card">no periodo</footer>
+                </div>
+            </section>
+            <section id="container-categoria" class="card">
+                <header id="cabecalho-card-categoria" class="cabecalho-card">
+                    <h3 id="titulo-card-categoria" class="titulo-card">POR CATEGORIA</h3>
+                </header>
+                <ul id="container-lista-categoria">
+                    <li class="lista-categoria">Moradia <span>x%</span></li>
+                    <li class="lista-categoria">Alimentação <span>x%</span></li>
+                    <li class="lista-categoria">Transporte <span>x%</span></li>
+                    <li class="lista-categoria">Lazer <span>x%</span></li>
+                    <li class="lista-categoria">Outros <span>x%</span></li>
+                </ul>
+            </section>
+            <section id="conainer-lanc-recente" class="card">
+                <header id="cabecalho-card-lanc-recente" class="cabecalho-card">
+                    <h3 id="titulo-card-lanc-recente" class="titulo-card">LANÇAMENTOS RECENTES</h3>
+                </header>
+                <ul id="container-lista-lanc-recente">
+                    <li class="lista-lanc-recente">
+                        <div id="container-img1" class="img-li-lanc">
+                            #
+                        </div>
+                        <div id="container-descricao1" class="descr-li-lanc">
+                            <p id="descr-lanc1" class="descr-lanc">Condominio</p>
+                            <p id="descr-categoria1" class="descr-categoria-lanc">Moradia - Conta Corrente</p>
+                        </div>
+                        <div id="container-valor1" class="val-li-lanc-recente">
+                            <p id="valor-lanc1" class="valor-lanc">600</p>
+                            <p id="vecimento-lanc1" class="vencimento-lanc">10/05</p>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+        </section>
     </main>
-    <footer>
+    <footer id="rodape-pagina">
         <p>&copy;Henrique Uchida - Controle Financeiro</p>
     </footer>
-    <script type="module" src="./script/login.js"></script>
+    <!-- <script type="module" src="./script/login.js"></script> -->
 </body>
 </html>
