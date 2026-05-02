@@ -15,6 +15,25 @@
         <h1>Controle Financeiro</h1>
     </header>
     <main>
+        <section id="container-menu-lateral">
+            <header id="titulo-menu">MENU</header>
+            <nav>
+                <ul>
+                    <li class="menu-lista">
+                        <div id="menu-img1">#</div>
+                        <p class="opcao-menu">BALANÇO</p>
+                    </li>
+                    <li class="menu-lista">
+                        <div id="menu-img2">#</div>
+                        <p class="opcao-menu">LANÇAMENTOS</p>
+                    </li>
+                    <li class="menu-lista">
+                        <div id="menu-img3">#</div>
+                        <p class="opcao-menu">CADASTROS</p>
+                    </li>
+                </ul>
+            </nav>
+        </section>
         <section id="conteudo-pagina">
             <header id="cabecalho-conteudo">
                 <h2 id="titulo-conteudo">Visão Geral</h2>
@@ -25,17 +44,17 @@
                 </div>
             </header>
             <section id="container-resumo">
-                <div id="card-receita" class="card">
+                <div id="card-receita" class="card card-resumo">
                     <h3 id="titulo-card-receita" class="titulo-card">RECEITAS</h3>
-                    <p id="info-receita" class="info-card">R$ 1000,00</p>
+                    <p id="info-receita" class="info-card txt-receita">R$ 1000,00</p>
                     <footer id="rodape-receita" class="rodape-card">vs mês anterior</footer>
                 </div>
-                <div id="card-despesa" class="card">
+                <div id="card-despesa" class="card card-resumo">
                     <h3 id="titulo-card-despesa" class="titulo-card">DESPESAS</h3>
-                    <p id="info-despesa" class="info-card">R$ 500,00</p>
+                    <p id="info-despesa" class="info-card txt-despesa">R$ 500,00</p>
                     <footer id="rodape-despesa" class="rodape-card">vs mês anterior</footer>
                 </div>
-                <div id="card-saldo" class="card">
+                <div id="card-saldo" class="card card-resumo">
                     <h3 id="titulo-card-saldo" class="titulo-card">SALDO</h3>
                     <p id="info-saldo" class="info-card">R$ 500,00</p>
                     <footer id="rodape-saldo" class="rodape-card">no periodo</footer>
@@ -64,11 +83,24 @@
                         </div>
                         <div id="container-descricao1" class="descr-li-lanc">
                             <p id="descr-lanc1" class="descr-lanc">Condominio</p>
-                            <p id="descr-categoria1" class="descr-categoria-lanc">Moradia - Conta Corrente</p>
+                            <p id="descr-categoria1" class="descr-categoria-lanc rodape-card">Moradia - Conta Corrente</p>
                         </div>
                         <div id="container-valor1" class="val-li-lanc-recente">
-                            <p id="valor-lanc1" class="valor-lanc">600</p>
-                            <p id="vecimento-lanc1" class="vencimento-lanc">10/05</p>
+                            <p id="valor-lanc1" class="valor-lanc txt-despesa">- R$ 600</p>
+                            <p id="vecimento-lanc1" class="vencimento-lanc rodape-card">10/05</p>
+                        </div>
+                    </li>
+                    <li class="lista-lanc-recente">
+                        <div id="container-img2" class="img-li-lanc">
+                            #
+                        </div>
+                        <div id="container-descricao2" class="descr-li-lanc">
+                            <p id="descr-lanc2" class="descr-lanc">Salário</p>
+                            <p id="descr-categoria2" class="descr-categoria-lanc rodape-card">Receita - Conta Corrente</p>
+                        </div>
+                        <div id="container-valor2" class="val-li-lanc-recente">
+                            <p id="valor-lanc2" class="valor-lanc txt-receita">+ R$ 3500</p>
+                            <p id="vecimento-lanc2" class="vencimento-lanc rodape-card">10/05</p>
                         </div>
                     </li>
                 </ul>
@@ -78,6 +110,14 @@
     <footer id="rodape-pagina">
         <p>&copy;Henrique Uchida - Controle Financeiro</p>
     </footer>
-    <!-- <script type="module" src="./script/login.js"></script> -->
+    
+
+    <!-- Bottom nav — visível apenas no mobile via CSS -->
+    <nav id="bottom-nav">
+        <button class="bnav-item ativo">📊<span>Balanço</span></button>
+        <button class="bnav-fab"></button>
+        <button class="bnav-item">⚙️<span>Cadastros</span></button>
+    </nav>
+    <script type="module" src="./script/script.js"></script>
 </body>
 </html>

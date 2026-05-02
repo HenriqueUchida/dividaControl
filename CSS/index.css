@@ -1,101 +1,499 @@
-*{
+/* ============================================
+   RESET & VARIÁVEIS
+   ============================================ */
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
     list-style-type: none;
-    font-family: 'Montserrat', 'Arial', 'sans-serif';
+    font-family: 'Montserrat', 'Arial', sans-serif;
 }
 
-button{
-    border-style: none;
+:root {
+    --bg:         #F5F2ED;
+    --card:       #FFFFFF;
+    --ink:        #1A1A18;
+    --ink2:       #6B6860;
+    --ink3:       #A8A49E;
+    --accent:     #2D6A4F;
+    --accent-lt:  #D8EFE3;
+    --danger:     #8B2020;
+    --border:     #E5E1DA;
+    --sidebar-w:  220px;
+    --header-h:   52px;
+    --footer-h:   36px;
 }
 
-#cabecalho-pagina{
-    height: 5dvh;
+button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-family: inherit;
 }
 
-main{
-    background-color: rgb(233, 224, 212);
-    height: 93dvh;
+/* ============================================
+   ESTRUTURA GERAL
+   ============================================ */
+body {
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
 }
 
-#rodape-pagina{
-    height: 2dvh;
-    text-align: center;
+#cabecalho-pagina {
+    height: var(--header-h);
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    flex-shrink: 0;
 }
 
-#conteudo-pagina{
-    margin: auto;
-    max-width: 50%;
+#cabecalho-pagina h1 {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.3px;
+}
+
+main {
+    flex: 1;
     display: grid;
-    
+    grid-template-columns: var(--sidebar-w) 1fr;
+    background: var(--bg);
+    min-height: 0;
 }
 
-#cabecalho-conteudo{
+#rodape-pagina {
+    height: var(--footer-h);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: var(--ink3);
+    border-top: 1px solid var(--border);
+    flex-shrink: 0;
+}
+
+/* ============================================
+   MENU LATERAL
+   ============================================ */
+#container-menu-lateral {
+    background: var(--card);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0 16px;
+    gap: 0;
+}
+
+#titulo-menu {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink3);
+    padding: 0 20px 12px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 8px;
+}
+
+.menu-lista {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink2);
+    transition: all 0.15s;
+    position: relative;
 }
 
-#box-periodo{
-    background-color: whitesmoke;
-    width: 150px;
-    height: 30px;
+.menu-lista:hover {
+    background: var(--bg);
+    color: var(--ink);
+}
+
+.menu-lista:first-child {
+    background: var(--accent-lt);
+    color: var(--accent);
+}
+
+.menu-lista:first-child::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--accent);
+    border-radius: 0 2px 2px 0;
+}
+
+#menu-img1, #menu-img2, #menu-img3 {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    background: var(--border);
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
     align-items: center;
-    border-radius: 10px;
-    border-style: solid;
-    border-width: 1px;
-    border-color: lightgray;
+    justify-content: center;
+    font-size: 11px;
+    color: var(--ink3);
+    flex-shrink: 0;
+}
+
+.opcao-menu {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+}
+
+/* Botão "+ Novo lançamento" no final do menu */
+#container-menu-lateral nav {
+    display: flex;
+    flex-direction: column;
+}
+
+#container-menu-lateral nav ul {
+    flex: 1;
+}
+
+#container-menu-lateral nav ul + *,
+#container-menu-lateral nav::after {
+    content: '+ Novo lançamento';
+    display: block;
+    margin: 16px 16px 0;
     padding: 10px;
-
+    background: var(--accent);
+    color: #fff;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    letter-spacing: 0.01em;
 }
 
-#container-resumo{
+/* ============================================
+   CONTEÚDO PRINCIPAL
+   ============================================ */
+#conteudo-pagina {
+    padding: 22px 24px 24px;
+    display: grid;
+    grid-template-columns: 1fr 1.7fr;
+    gap: 14px;
+    align-content: start;
+    overflow-y: auto;
+}
+
+#cabecalho-conteudo {
+    grid-column: 1 / -1;
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#titulo-conteudo {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.3px;
+}
+
+#box-periodo {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    width: 160px;
+    height: 34px;
+    display: flex;
     justify-content: space-between;
     align-items: center;
-    
+    padding: 0 12px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+#btn-voltar-periodo,
+#btn-avancar-periodo {
+    color: var(--ink3);
+    font-size: 14px;
+    font-weight: 700;
+    padding: 2px 4px;
+    transition: color 0.15s;
+}
+
+#btn-voltar-periodo:hover,
+#btn-avancar-periodo:hover {
+    color: var(--ink);
+}
+
+/* ---- Cards resumo ---- */
+#container-resumo {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
 }
 
 .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px 16px;
     display: flex;
     flex-direction: column;
-    gap: 0.3rem;
-    background-color: whitesmoke;
-    min-width: 150px;
-    border-radius: 10px;
-    padding: 12px;
-    border-style: solid;
-    border-width: 1px;
-    border-color: lightgray;
+    gap: 4px;
 }
 
-.titulo-card, .rodape-card{
+.titulo-card {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--ink3);
+    margin-bottom: 2px;
+}
+
+.info-card {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.5px;
+}
+
+.rodape-card {
+    font-size: 11px;
+    color: var(--ink3);
+    font-weight: 400;
+}
+
+.txt-receita { color: var(--accent); }
+.txt-despesa { color: var(--danger); }
+
+/* ---- Card categorias ---- */
+.cabecalho-card {
+    margin-bottom: 12px;
+}
+
+#container-lista-categoria {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.lista-categoria {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    color: var(--ink2);
+}
+
+.lista-categoria span {
+    font-weight: 600;
+    color: var(--ink);
+    font-size: 12px;
+}
+
+/* ---- Card lançamentos recentes ---- */
+#container-lista-lanc-recente {
+    display: flex;
+    flex-direction: column;
+}
+
+.lista-lanc-recente {
+    display: grid;
+    grid-template-columns: 36px 1fr auto;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.lista-lanc-recente:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.img-li-lanc {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    background: var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: var(--ink3);
+    flex-shrink: 0;
+}
+
+.descr-li-lanc {
+    min-width: 0;
+}
+
+.descr-lanc {
+    font-size: 13px;
     font-weight: 500;
-    font-size: small;
-    color: gray;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.info-card{
-    font-weight: bold;
-    font-size: larger;
+.descr-categoria-lanc {
+    font-size: 11px;
 }
 
-#info-receita{
-    color: darkgreen;
+.val-li-lanc-recente {
+    text-align: right;
+    flex-shrink: 0;
 }
 
-#info-despesa{
-    color: brown;
+.valor-lanc {
+    font-size: 13px;
+    font-weight: 600;
 }
 
-@media (max-width: 600px) {
-    #titulo-conteudo{
+.vencimento-lanc {
+    font-size: 11px;
+}
+
+/* Bottom nav: oculto por padrão, só aparece no mobile */
+#bottom-nav {
+    display: none;
+}
+
+/* ============================================
+   RESPONSIVIDADE — MOBILE
+   ============================================ */
+@media (max-width: 700px) {
+
+    /* Esconde sidebar */
+    #container-menu-lateral {
         display: none;
+    }
+
+    main {
+        grid-template-columns: 1fr;
+    }
+
+    /* Espaço para bottom nav */
+    #conteudo-pagina {
+        grid-template-columns: 1fr;
+        padding: 14px 14px 80px;
+        gap: 12px;
+    }
+
+    #titulo-conteudo {
+        font-size: 17px;
+    }
+
+    /* Cards em 2 colunas, saldo ocupa linha inteira */
+    #container-resumo {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    #card-saldo {
+        grid-column: 1 / -1;
+    }
+
+    .info-card {
+        font-size: 18px;
+    }
+
+    /* Categorias e lançamentos empilhados */
+    #container-categoria,
+    #conainer-lanc-recente {
+        grid-column: 1 / -1;
+    }
+
+    #cabecalho-pagina {
+        height: 48px;
+        padding: 0 16px;
+        justify-content: space-between;
+    }
+
+    #cabecalho-pagina h1 {
+        font-size: 14px;
+    }
+
+    #bottom-nav {
+        display: flex;
+        position: fixed;
+        bottom: 0; left: 0; right: 0;
+        height: 64px;
+        background: var(--card);
+        border-top: 1px solid var(--border);
+        align-items: center;
+        z-index: 100;
+    }
+
+    .bnav-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+        padding: 8px 0;
+        font-size: 9px;
+        font-weight: 500;
+        color: var(--ink3);
+        background: transparent;
+        border: none;
+        cursor: pointer;
+    }
+
+    .bnav-item span {
+        font-size: 9px;
+    }
+
+    .bnav-item.ativo {
+        color: var(--accent);
+    }
+
+    .bnav-fab {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        padding: 4px 0;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+    }
+
+    .bnav-fab::before {
+        content: '+';
+        width: 44px;
+        height: 44px;
+        background: var(--accent);
+        color: #fff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        font-weight: 300;
+        box-shadow: 0 4px 12px rgba(45,106,79,0.35);
+    }
+}
+
+@media (max-width: 400px) {
+    #container-resumo {
+        grid-template-columns: 1fr;
+    }
+
+    #card-saldo {
+        grid-column: auto;
     }
 }
