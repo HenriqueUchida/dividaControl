@@ -183,6 +183,9 @@ main {
    CONTEÚDO PRINCIPAL
    ============================================ */
 #conteudo-pagina {
+    width: 100%;
+    max-width: 1280px;
+    justify-self: center;
     padding: 22px 24px 24px;
     display: grid;
     grid-template-columns: 1fr 1.7fr;
@@ -238,8 +241,15 @@ main {
 #container-resumo {
     grid-column: 1 / -1;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 10px;
+}
+
+#card-saldo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    grid-column: 1 / -1;
 }
 
 .card {

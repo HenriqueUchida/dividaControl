@@ -19,15 +19,15 @@
             <header id="titulo-menu">MENU</header>
             <nav>
                 <ul>
-                    <li class="menu-lista">
+                    <li id="balanco" class="menu-lista">
                         <div id="menu-img1">#</div>
                         <p class="opcao-menu">BALANÇO</p>
                     </li>
-                    <li class="menu-lista">
+                    <li id="lancamentos" class="menu-lista">
                         <div id="menu-img2">#</div>
                         <p class="opcao-menu">LANÇAMENTOS</p>
                     </li>
-                    <li class="menu-lista">
+                    <li id="cadastros" class="menu-lista">
                         <div id="menu-img3">#</div>
                         <p class="opcao-menu">CADASTROS</p>
                     </li>
@@ -39,25 +39,35 @@
                 <h2 id="titulo-conteudo">Visão Geral</h2>
                 <div id="box-periodo">
                     <button id="btn-voltar-periodo">&lt</button>
-                    <p>Maio 2026</p>
+                    <p id="descricao-periodo">Maio 2026</p>
                     <button id="btn-avancar-periodo">&gt</button>
                 </div>
             </header>
             <section id="container-resumo">
+                <div id="card-saldo" class="card card-resumo">
+                    <h3 id="titulo-card-saldo" class="titulo-card">SALDO</h3>
+                    <p id="info-saldo" class="info-card">R$ 500,00</p>
+                    <footer id="rodape-saldo" class="rodape-card">no periodo</footer>
+                </div>
                 <div id="card-receita" class="card card-resumo">
                     <h3 id="titulo-card-receita" class="titulo-card">RECEITAS</h3>
                     <p id="info-receita" class="info-card txt-receita">R$ 1000,00</p>
                     <footer id="rodape-receita" class="rodape-card">vs mês anterior</footer>
                 </div>
+                <div id="card-nubank" class="card card-resumo">
+                    <h3 id="titulo-card-despesa" class="titulo-card">NUBANK</h3>
+                    <p id="info-despesa" class="info-card txt-despesa">R$ 500,00</p>
+                    <footer id="rodape-despesa" class="rodape-card">vs mês anterior</footer>
+                </div>
+                <div id="card-merc-pago" class="card card-resumo">
+                    <h3 id="titulo-card-despesa" class="titulo-card">MERCADO PAGO</h3>
+                    <p id="info-despesa" class="info-card txt-despesa">R$ 500,00</p>
+                    <footer id="rodape-despesa" class="rodape-card">vs mês anterior</footer>
+                </div>
                 <div id="card-despesa" class="card card-resumo">
                     <h3 id="titulo-card-despesa" class="titulo-card">DESPESAS</h3>
                     <p id="info-despesa" class="info-card txt-despesa">R$ 500,00</p>
                     <footer id="rodape-despesa" class="rodape-card">vs mês anterior</footer>
-                </div>
-                <div id="card-saldo" class="card card-resumo">
-                    <h3 id="titulo-card-saldo" class="titulo-card">SALDO</h3>
-                    <p id="info-saldo" class="info-card">R$ 500,00</p>
-                    <footer id="rodape-saldo" class="rodape-card">no periodo</footer>
                 </div>
             </section>
             <section id="container-categoria" class="card">
@@ -118,6 +128,6 @@
         <button class="bnav-fab"></button>
         <button class="bnav-item">⚙️<span>Cadastros</span></button>
     </nav>
-    <script type="module" src="./script/script.js"></script>
+    <script type="module" src="./script/aplicacao.js"></script>
 </body>
 </html>
