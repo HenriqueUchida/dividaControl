@@ -9,4 +9,5 @@ app.use(express.json());
 
 app.use('/lancamentos', lancamentosRouter);
 
+
 export default app;

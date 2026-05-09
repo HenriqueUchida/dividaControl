@@ -33,4 +33,27 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/:id_cartao', async (req,res)=> {
+    try{
+        const idCartao = req.params.id_cartao;
+        const[rows] = await pool.query(`
+            select 
+                l.id_cartao, 
+                c.descricao, sum(l.valor) as valor_fatura, 
+                DATE_FORMAT(l.data_vencimento,  '%d/%m/%Y') as data_vencimento
+            from lancamento l
+            inner join cartao c
+            on (c.id = l.id_cartao)
+            where l.data_vencimento between '2026-05-01' and '2026-05-30'
+            and id_cartao = ?
+            group by l.id_cartao, l.data_vencimento`,
+            [idCartao]
+        );
+        res.json(rows);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({erro: 'Erro ao buscar informações'})
+    }
+});
+
 export default router;
