@@ -252,6 +252,21 @@ main {
     grid-column: 1 / -1;
 }
 
+#card-nubank{
+    background-color: rgb(172, 86, 252);
+    cursor: pointer;
+}
+
+#card-merc-pago{
+    background-color: rgb(31, 104, 177);
+    cursor: pointer;
+}
+
+#card-nubank, #card-merc-pago > p{
+    color: white;
+}
+
+
 .card {
     background: var(--card);
     border: 1px solid var(--border);
@@ -260,6 +275,10 @@ main {
     display: flex;
     flex-direction: column;
     gap: 4px;
+}
+
+.card-resumo {
+    align-items: center;
 }
 
 .titulo-card {
