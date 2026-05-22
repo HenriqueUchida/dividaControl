@@ -1,3 +1,5 @@
+import {buscaFaturas} from '../api/api.js'
+
 const conteudo = document.getElementById('conteudo-pagina');
 conteudo.innerHTML = ''
 
@@ -25,31 +27,32 @@ const dadosCards = [
         rodape: 'vs mês anterior',
         classeValor: 'txt-despesa'
     },
-    {
-        nome: 'nubank',
-        id: 'card-nubank',
-        titulo: 'NUBANK',
-        valor: 'R$ 500,00',
-        rodape: 'vs mês anterior',
-        classeValor: ''// 'txt-despesa'
-    },
-    {
-        nome: 'merc-pago',
-        id: 'card-merc-pago',
-        titulo: 'MERCADO PAGO',
-        valor: 'R$ 500,00',
-        rodape: 'vs mês anterior',
-        classeValor: 'txt-despesa'
-    },
+    // {
+    //     nome: 'nubank',
+    //     id: 'card-nubank',
+    //     titulo: 'NUBANK',
+    //     valor: 'R$ 500,00',
+    //     rodape: 'vs mês anterior',
+    //     classeValor: ''// 'txt-despesa'
+    // },
+    // {
+    //     nome: 'merc-pago',
+    //     id: 'card-merc-pago',
+    //     titulo: 'MERCADO PAGO',
+    //     valor: 'R$ 500,00',
+    //     rodape: 'vs mês anterior',
+    //     classeValor: 'txt-despesa'
+    // },
 ];
 
-export function renderizaResumos(){
-    conteudo.innerHTML = `${cabecalhoConteudo()}`;
-    conteudo.appendChild(cardsResumo());
-    conteudo.innerHTML += `${categoria()}`;
-    conteudo.innerHTML += `${lancRecentes()}`;
-
+function formataMoeda(valor) {
+    return Number(valor).toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+    });
 }
+
+
 
 function cabecalhoConteudo() {
    const conteudoCabecalho = `<header id="cabecalho-conteudo">
@@ -63,13 +66,26 @@ function cabecalhoConteudo() {
     return conteudoCabecalho;
 }
 
-function retornaPeriodo() {
+function retornaPeriodo(dia) {
     const data = new Date();
     const meses = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
-    const mes = meses[data.getMonth()];
+    const mes = data.getMonth();
     const ano = data.getFullYear();
-    
-    return `${mes} de ${ano}`;
+    const conteudo = ''
+    const dataReq = new Date(ano, mes+1, 0);
+    const mesFormatado = String(dataReq.getMonth() + 1).padStart(2, '0');
+    if(dia == null){
+        return `${meses[mes]} de ${ano}`
+
+    } else if(dia == 1){
+        return `${ano}-${mesFormatado}-01`
+
+    } else if(dia == 0){
+        const dia = String(dataReq.getDate());
+        return `${ano}-${mesFormatado}-${dia}`
+    }
+
+    return 'Parametro inválido'
 }
 
 function cardsResumo(dados) {
@@ -79,12 +95,26 @@ function cardsResumo(dados) {
        const elementosResumo = `<div id="${l.id}" class="card card-resumo">
             <h3 id="titulo-card-${l}" class="titulo-card">${l.titulo}</h3>
             <p id="info-${l.nome}" class="${l.classeValor} info-card">R$ 500,00</p>
-            <footer id="rodape-${l.rodape}" class="rodape-card">no periodo</footer>
+            <footer id="rodape-${l.nome}" class="rodape-card">no periodo</footer>
         </div>`
         containerResumo.innerHTML+=`${elementosResumo}`
 
     })
     return containerResumo;
+}
+
+
+function cardsResumoCartao(dados){
+    const containerPai = document.querySelector('#container-resumo');
+    dados.forEach(dado =>{
+        const containerCartao = `<div id="card-${dado.descricao.toLowerCase().replace(" ","-")}" class="card card-resumo">
+            <h3 id="titulo-card-${dado.descricao.toLowerCase().replace(" ","-")}" class="titulo-card">${dado.descricao.toLowerCase().replace(" ","-")}</h3>
+            <p id="info-${dado.descricao.toLowerCase().replace(" ","-")}" class="${dado.descricao.toLowerCase().replace(" ","-")} info-card">${dado.valor_fatura}</p>
+            <footer id="rodape-${dado.descricao.toLowerCase().replace(" ","-")}" class="rodape-card">no periodo</footer>
+        </div>`
+        containerPai.innerHTML += containerCartao;
+    })
+    return containerPai
 }
 
 
@@ -131,4 +161,18 @@ function lancRecentes(dados){
             </section>`
 
     return containerLancRecente
+}
+
+
+export async function renderizaResumos(){
+    const primeiroDia = retornaPeriodo(1);
+    const ultimoDia = retornaPeriodo(0);
+    const faturas = await buscaFaturas(primeiroDia, ultimoDia);
+
+    conteudo.innerHTML = `${cabecalhoConteudo()}`;
+    conteudo.appendChild(cardsResumo());
+    cardsResumoCartao(faturas);
+    conteudo.innerHTML += `${categoria()}`;
+    conteudo.innerHTML += `${lancRecentes()}`;
+
 }

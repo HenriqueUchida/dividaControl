@@ -257,12 +257,13 @@ main {
     cursor: pointer;
 }
 
-#card-merc-pago{
+#card-mercado-pago{
     background-color: rgb(31, 104, 177);
     cursor: pointer;
 }
 
-#card-nubank, #card-merc-pago > p{
+
+#card-nubank > p, #card-mercado-pago > p{
     color: white;
 }
 
