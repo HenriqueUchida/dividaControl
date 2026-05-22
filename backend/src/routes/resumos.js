@@ -6,7 +6,6 @@ const router = Router();
 
 router.get('/faturas', async (req,res)=> {
     try{
-        const idCartao = req.params.id_cartao;
         const { data_ini, data_fim } = req.query;
 
         const[rows] = await pool.query(`
@@ -22,7 +21,6 @@ router.get('/faturas', async (req,res)=> {
             where l.id_conta is null
             group by c.id, l.data_vencimento`,
             [data_ini, data_fim]
-            //[idCartao]
         );
         res.json(rows);
     } catch (err) {
@@ -31,6 +29,24 @@ router.get('/faturas', async (req,res)=> {
     }
 });
 
+router.get('/receitas', async(req,res)=>{
+    try{
+        const {data_ini, data_fim} = req.query;
+
+        const[rows] = await pool.query(`
+            select l.tipo,
+                   sum(l.valor) as valor 
+            from lancamento l
+            where data_vencimento BETWEEN ? and ?
+            group by l.tipo`,
+            [data_ini, data_fim]
+        );
+        res.json(rows);
+    } catch (err){
+        console.error(err);
+        res.status(500).json({erro: 'Erro ao buscar informações'})
+    }
+})
 
 
 

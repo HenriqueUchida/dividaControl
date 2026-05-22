@@ -1,4 +1,5 @@
 import {buscaFaturas} from '../api/api.js'
+import {buscaLancamentos} from '../api/api.js'
 
 const conteudo = document.getElementById('conteudo-pagina');
 conteudo.innerHTML = ''
