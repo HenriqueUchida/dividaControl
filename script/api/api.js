@@ -7,6 +7,6 @@ export async function buscaFaturas(dataIni, dataFim){
 }
 
 export async function buscaLancamentos(dataIni, dataFim){
-    const res = await fetch(`${URL}/resumos/receitas?data_ini=${dataIni}&data_fim=${dataFim}`)
+    const res = await fetch(`${URL}/resumos/lancamentos?data_ini=${dataIni}&data_fim=${dataFim}`)
     return res.json();
 }

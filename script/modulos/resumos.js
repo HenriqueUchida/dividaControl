@@ -8,7 +8,7 @@ const dadosCards = [
     {   nome: 'saldo',
         id: 'card-saldo',
         titulo: 'SALDO',
-        valor: 'R$ 500,00',
+        valor: 0,
         rodape: 'no periodo',
         classeValor: '' 
     },
@@ -16,7 +16,7 @@ const dadosCards = [
         nome: 'receita',
         id: 'card-receita',
         titulo: 'RECEITAS',
-        valor: 'R$ 1000,00',
+        valor: 0,
         rodape: 'vs mês anterior',
         classeValor: 'txt-receita' 
     },
@@ -24,7 +24,7 @@ const dadosCards = [
         nome: 'despesa',
         id: 'card-despesa',
         titulo: 'DESPESAS',
-        valor: 'R$ 500,00',
+        valor: 0,
         rodape: 'vs mês anterior',
         classeValor: 'txt-despesa'
     },
@@ -45,6 +45,34 @@ const dadosCards = [
     //     classeValor: 'txt-despesa'
     // },
 ];
+
+function calculaResumosLanc(lancamentos){
+    let totalReceitas = 0;
+    let totalDespesas = 0;
+
+    lancamentos.forEach(lancamento => {
+        const valor = Number(lancamento.valor);
+
+        if(lancamento.tipo === 'RECEITA'){
+            totalReceitas += valor;
+        } else if(lancamento.tipo === 'DESPESA') {
+            totalDespesas += valor;
+        }
+    });
+    return {
+        saldo: totalReceitas - totalDespesas,
+        receita: totalReceitas,
+        despesa: totalDespesas
+    };
+
+}
+
+
+function injetaValoresNosCards(dadosCards, resumo) {
+    dadosCards.forEach(card => {
+        card.valor = resumo[card.nome];
+    });
+}
 
 function formataMoeda(valor) {
     return Number(valor).toLocaleString('pt-BR', {
@@ -95,7 +123,7 @@ function cardsResumo(dados) {
     dadosCards.forEach(l => {
        const elementosResumo = `<div id="${l.id}" class="card card-resumo">
             <h3 id="titulo-card-${l}" class="titulo-card">${l.titulo}</h3>
-            <p id="info-${l.nome}" class="${l.classeValor} info-card">R$ 500,00</p>
+            <p id="info-${l.nome}" class="${l.classeValor} info-card">${formataMoeda(l.valor)}</p>
             <footer id="rodape-${l.nome}" class="rodape-card">no periodo</footer>
         </div>`
         containerResumo.innerHTML+=`${elementosResumo}`
@@ -169,11 +197,16 @@ export async function renderizaResumos(){
     const primeiroDia = retornaPeriodo(1);
     const ultimoDia = retornaPeriodo(0);
     const faturas = await buscaFaturas(primeiroDia, ultimoDia);
+    const lancamentos = await buscaLancamentos(primeiroDia, ultimoDia);
+
+    const resumo = calculaResumosLanc(lancamentos);
+
+    injetaValoresNosCards(dadosCards, resumo);
+
 
     conteudo.innerHTML = `${cabecalhoConteudo()}`;
     conteudo.appendChild(cardsResumo());
     cardsResumoCartao(faturas);
     conteudo.innerHTML += `${categoria()}`;
     conteudo.innerHTML += `${lancRecentes()}`;
-
 }

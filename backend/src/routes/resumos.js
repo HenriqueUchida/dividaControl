@@ -29,7 +29,7 @@ router.get('/faturas', async (req,res)=> {
     }
 });
 
-router.get('/receitas', async(req,res)=>{
+router.get('/lancamentos', async(req,res)=>{
     try{
         const {data_ini, data_fim} = req.query;
 
