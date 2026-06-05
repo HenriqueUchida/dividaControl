@@ -2,12 +2,20 @@ import {buscaFaturas} from '../api/api.js'
 import {buscaLancamentos} from '../api/api.js'
 
 const conteudo = document.getElementById('conteudo-pagina');
-conteudo.innerHTML = ''
+
 
 const dadosCards = [
+    {
+        nome: 'vencendo',
+        id: 'card-vencimento',
+        titulo: 'VENCENDO HOJE',
+        valor: 0,
+        rodape: '',
+        classeValor: ''
+    },
     {   nome: 'saldo',
         id: 'card-saldo',
-        titulo: 'SALDO',
+        titulo: 'BALANÇO',
         valor: 0,
         rodape: 'no periodo',
         classeValor: '' 
@@ -28,6 +36,8 @@ const dadosCards = [
         rodape: 'vs mês anterior',
         classeValor: 'txt-despesa'
     },
+    
+
     // {
     //     nome: 'nubank',
     //     id: 'card-nubank',
@@ -122,7 +132,7 @@ function cardsResumo(dados) {
     containerResumo.id = 'container-resumo';
     dadosCards.forEach(l => {
        const elementosResumo = `<div id="${l.id}" class="card card-resumo">
-            <h3 id="titulo-card-${l}" class="titulo-card">${l.titulo}</h3>
+            <h3 id="titulo-card-${l.nome}" class="titulo-card">${l.titulo}</h3>
             <p id="info-${l.nome}" class="${l.classeValor} info-card">${formataMoeda(l.valor)}</p>
             <footer id="rodape-${l.nome}" class="rodape-card">no periodo</footer>
         </div>`
@@ -137,8 +147,8 @@ function cardsResumoCartao(dados){
     const containerPai = document.querySelector('#container-resumo');
     dados.forEach(dado =>{
         const containerCartao = `<div id="card-${dado.descricao.toLowerCase().replace(" ","-")}" class="card card-resumo">
-            <h3 id="titulo-card-${dado.descricao.toLowerCase().replace(" ","-")}" class="titulo-card">${dado.descricao.toLowerCase().replace(" ","-")}</h3>
-            <p id="info-${dado.descricao.toLowerCase().replace(" ","-")}" class="${dado.descricao.toLowerCase().replace(" ","-")} info-card">${dado.valor_fatura}</p>
+            <h3 id="titulo-card-${dado.descricao.toLowerCase().replace(" ","-")}" class="titulo-card">${dado.descricao.toLowerCase()}</h3>
+            <p id="info-${dado.descricao.toLowerCase().replace(" ","-")}" class="${dado.descricao.toLowerCase().replace(" ","-")} info-card">${formataMoeda(dado.valor_fatura)}</p>
             <footer id="rodape-${dado.descricao.toLowerCase().replace(" ","-")}" class="rodape-card">no periodo</footer>
         </div>`
         containerPai.innerHTML += containerCartao;
@@ -194,6 +204,7 @@ function lancRecentes(dados){
 
 
 export async function renderizaResumos(){
+    conteudo.innerHTML = ''
     const primeiroDia = retornaPeriodo(1);
     const ultimoDia = retornaPeriodo(0);
     const faturas = await buscaFaturas(primeiroDia, ultimoDia);
@@ -203,10 +214,9 @@ export async function renderizaResumos(){
 
     injetaValoresNosCards(dadosCards, resumo);
 
-
     conteudo.innerHTML = `${cabecalhoConteudo()}`;
     conteudo.appendChild(cardsResumo());
     cardsResumoCartao(faturas);
-    conteudo.innerHTML += `${categoria()}`;
-    conteudo.innerHTML += `${lancRecentes()}`;
+    // conteudo.innerHTML += `${categoria()}`;
+    // conteudo.innerHTML += `${lancRecentes()}`;
 }

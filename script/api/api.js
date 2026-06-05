@@ -10,3 +10,7 @@ export async function buscaLancamentos(dataIni, dataFim){
     const res = await fetch(`${URL}/resumos/lancamentos?data_ini=${dataIni}&data_fim=${dataFim}`)
     return res.json();
 }
+
+export async function buscaVencimentos(){
+    const res = await fetch(`${URL}/vence`)
+}

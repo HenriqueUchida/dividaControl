@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import lancamentosRouter from './routes/lancamentos.js';
 import resumos from './routes/resumos.js'
+import vencimentos from './routes/lancamentos.js'
 
 const app = express();
 
@@ -12,5 +13,6 @@ app.use('/lancamentos', lancamentosRouter);
 
 app.use('/resumos', resumos)
 
+app.use('/', vencimentos)
 
 export default app;

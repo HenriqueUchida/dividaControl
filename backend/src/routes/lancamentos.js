@@ -33,6 +33,20 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/vence', async(req,res)=> {
+    try {
+        const[rows] = await pool.query(`
+            select coalesce(sum(l.valor),0) as valor_vencendo 
+            from lancamento l 
+            WHERE data_vencimento = date(now()) 
+            and tipo = 'DESPESA'
+            `)
+            res.json(rows);
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({Erro: 'Não foi possível buscar as depesas vencendo hoje'})
+        }
+})
 
 
 export default router;
