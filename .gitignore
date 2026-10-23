@@ -1,1 +1,20 @@
+# segredos e ambiente
+.env
+*.pem
+
+# python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.ruff_cache/
+
+# node (etapa 4)
 node_modules/
+dist/
+
+# dados locais
+pgdata/
+*.dump
+
+ROADMAP.md
