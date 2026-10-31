@@ -25,6 +25,10 @@ describe('Frontend Formatters', () => {
     expect(formatDateBR('2026-01-05')).toBe('05/01/2026');
   });
 
+  it('formatDateBR deve formatar strings ISO com timestamp para DD/MM/AAAA', () => {
+    expect(formatDateBR('2026-10-31T00:00:00.000Z')).toBe('31/10/2026');
+  });
+
   it('formatDateBR deve tratar strings inválidas sem quebrar', () => {
     expect(formatDateBR('')).toBe('');
     expect(formatDateBR(null)).toBe('');

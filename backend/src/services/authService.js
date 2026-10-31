@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import db from '../db/knex.js';
+import { seedDefaultCategories } from './categoryService.js';
 
 const SALT_ROUNDS = 10;
 const JWT_SECRET = process.env.JWT_SECRET || 'secret-para-ambiente-de-desenvolvimento-e-testes';
@@ -103,24 +104,29 @@ export async function registerUser({ nome, email, senha }) {
   const senha_hash = await hashPassword(senha);
   const normalizedEmail = email.trim().toLowerCase();
 
-  const [createdUser] = await db('usuarios')
-    .insert({
-      nome: nome.trim(),
-      email: normalizedEmail,
-      senha_hash,
-      ativo: true,
-    })
-    .returning('*');
+  return db.transaction(async (trx) => {
+    const [createdUser] = await trx('usuarios')
+      .insert({
+        nome: nome.trim(),
+        email: normalizedEmail,
+        senha_hash,
+        ativo: true,
+      })
+      .returning('*');
 
-  const token = generateToken({
-    userId: createdUser.id,
-    email: createdUser.email,
+    // Cadastra categorias padronizadas automaticamente
+    await seedDefaultCategories(createdUser.id, trx);
+
+    const token = generateToken({
+      userId: createdUser.id,
+      email: createdUser.email,
+    });
+
+    return {
+      user: sanitizeUser(createdUser),
+      token,
+    };
   });
-
-  return {
-    user: sanitizeUser(createdUser),
-    token,
-  };
 }
 
 /**

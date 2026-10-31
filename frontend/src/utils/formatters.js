@@ -18,15 +18,21 @@ export function formatCentsToBRL(cents) {
 }
 
 /**
- * Formata data no formato AAAA-MM-DD para DD/MM/AAAA.
+ * Formata data (string ISO, AAAA-MM-DD ou Date) para DD/MM/AAAA.
  *
- * @param {string} dateStr 'AAAA-MM-DD'
+ * @param {string|Date} dateVal
  * @returns {string} 'DD/MM/AAAA'
  */
-export function formatDateBR(dateStr) {
-  if (!dateStr || typeof dateStr !== 'string') return '';
-  const parts = dateStr.split('-');
-  if (parts.length !== 3) return dateStr;
-  return `${parts[2]}/${parts[1]}/${parts[0]}`;
-}
+export function formatDateBR(dateVal) {
+  if (!dateVal) return '';
 
+  const str = typeof dateVal === 'string' ? dateVal : dateVal.toISOString();
+  // Isola apenas o trecho da data antes do indicador de horário 'T'
+  const dateOnly = str.split('T')[0];
+  const parts = dateOnly.split('-');
+
+  if (parts.length !== 3) return str;
+
+  const [year, month, day] = parts;
+  return `${day.padStart(2, '0')}/${month.padStart(2, '0')}/${year}`;
+}

@@ -146,6 +146,23 @@ describe('Rotas de Contas (/accounts) e Categorias (/categories)', () => {
       expect(response.status).toBe(400);
       expect(response.body.code).toBe('VALIDATION_ERROR');
     });
+
+    it('POST /categories/seed-defaults deve gerar categorias padrão com sucesso', async () => {
+      const mockSeeded = [
+        { id: '1', nome: 'Alimentação', tipo: 'expense' },
+        { id: '2', nome: 'Salário', tipo: 'income' },
+      ];
+
+      vi.spyOn(categoryService, 'seedDefaultCategories').mockResolvedValue(mockSeeded);
+
+      const response = await request(app)
+        .post('/categories/seed-defaults')
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(response.status).toBe(200);
+      expect(response.body.success).toBe(true);
+      expect(response.body.categories).toEqual(mockSeeded);
+    });
   });
 });
 

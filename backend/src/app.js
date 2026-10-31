@@ -34,6 +34,9 @@ app.use((req, res) => {
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
+  if (statusCode >= 500) {
+    console.error('[API Error]:', err);
+  }
   res.status(statusCode).json({
     code: err.code || 'INTERNAL_SERVER_ERROR',
     message: err.message || 'Erro interno do servidor',

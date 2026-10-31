@@ -10,8 +10,12 @@ const api = axios.create({
 // Interceptor para injetar o token JWT em todas as requisições autenticadas
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+  if (token && token !== 'null' && token !== 'undefined') {
+    if (config.headers && typeof config.headers.set === 'function') {
+      config.headers.set('Authorization', `Bearer ${token}`);
+    } else {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
   }
   return config;
 });
@@ -23,6 +27,10 @@ api.interceptors.response.use(
     if (error.response && error.response.status === 401) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
+      // Redireciona para o login se o token for inválido ou ausente
+      if (typeof window !== 'undefined' && window.location.pathname !== '/login' && window.location.pathname !== '/register') {
+        window.location.href = '/login';
+      }
     }
     return Promise.reject(error);
   }
@@ -46,6 +54,7 @@ export const categoriesApi = {
   create: (data) => api.post('/categories', data),
   update: (id, data) => api.put(`/categories/${id}`, data),
   delete: (id) => api.delete(`/categories/${id}`),
+  seedDefaults: () => api.post('/categories/seed-defaults'),
 };
 
 export const cardsApi = {

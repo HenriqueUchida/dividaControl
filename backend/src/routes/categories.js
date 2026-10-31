@@ -22,6 +22,20 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+// Gerar categorias padronizadas para o usuário
+router.post('/seed-defaults', async (req, res, next) => {
+  try {
+    const created = await categoryService.seedDefaultCategories(req.user.userId);
+    return res.status(200).json({
+      success: true,
+      message: `${created.length} categorias padrão geradas com sucesso`,
+      categories: created,
+    });
+  } catch (error) {
+    return next(error);
+  }
+});
+
 // Buscar uma categoria específica por ID
 router.get('/:id', async (req, res, next) => {
   try {

@@ -31,67 +31,71 @@ async function handleRegister() {
 </script>
 
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-slate-100 px-4">
-    <div class="max-w-md w-full bg-white rounded-xl shadow-lg p-8 border border-slate-200">
-      <div class="text-center mb-6">
-        <h1 class="text-2xl font-bold text-slate-800">Criar Conta</h1>
-        <p class="text-sm text-slate-500 mt-1">Inicie o controle das suas finanças pessoais</p>
+  <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950 px-4 py-12">
+    <div class="max-w-md w-full bg-white rounded-3xl shadow-2xl p-8 sm:p-10 border border-slate-200/80">
+      <div class="text-center mb-8">
+        <div class="w-12 h-12 mx-auto rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center shadow-lg shadow-emerald-500/30 mb-3">
+          <span class="text-white font-black text-2xl">$</span>
+        </div>
+        <h1 class="text-2xl font-black text-slate-900 tracking-tight">Criar Conta</h1>
+        <p class="text-xs text-slate-500 mt-1">Comece hoje a organizar suas finanças com o dividaControl</p>
       </div>
 
-      <div v-if="error" class="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg">
+      <div v-if="error" class="mb-5 p-3.5 bg-rose-50 border border-rose-200 text-rose-800 text-xs font-semibold rounded-xl">
         {{ error }}
       </div>
 
       <form @submit.prevent="handleRegister" class="space-y-4">
         <div>
-          <label class="block text-sm font-medium text-slate-700 mb-1">Nome Completo</label>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Nome Completo</label>
           <input
             v-model="nome"
             type="text"
             required
             placeholder="Seu nome"
-            class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            class="w-full px-3.5 py-2.5 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
           />
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-slate-700 mb-1">E-mail</label>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">E-mail</label>
           <input
             v-model="email"
             type="email"
             required
             placeholder="seu@email.com"
-            class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            class="w-full px-3.5 py-2.5 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
           />
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-slate-700 mb-1">Senha (mínimo 6 caracteres)</label>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Senha (mínimo 6 caracteres)</label>
           <input
             v-model="senha"
             type="password"
             required
             minlength="6"
             placeholder="••••••••"
-            class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            class="w-full px-3.5 py-2.5 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
           />
         </div>
 
         <button
           type="submit"
           :disabled="loading"
-          class="w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg shadow transition disabled:opacity-50"
+          class="w-full py-3 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-md transition disabled:opacity-50 text-sm active:scale-98"
         >
-          <span v-if="loading">Cadastrando...</span>
-          <span v-else>Criar Conta</span>
+          <span v-if="loading">Criando sua conta...</span>
+          <span v-else>Cadastrar Gratuitamente</span>
         </button>
       </form>
 
-      <p class="text-center text-sm text-slate-500 mt-6">
-        Já tem uma conta?
-        <router-link to="/login" class="text-emerald-600 hover:underline font-medium">Faça login</router-link>
-      </p>
+      <div class="text-center text-xs text-slate-500 mt-8 pt-6 border-t border-slate-100">
+        Já possui cadastro?
+        <router-link to="/login" class="text-emerald-600 hover:text-emerald-700 font-bold hover:underline ml-1">
+          Fazer Login
+        </router-link>
+      </div>
     </div>
   </div>
 </template>
-

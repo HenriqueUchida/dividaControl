@@ -1,5 +1,52 @@
 import db from '../db/knex.js';
 
+export const DEFAULT_CATEGORIES = [
+  // Despesas
+  { nome: 'Alimentação', tipo: 'expense' },
+  { nome: 'Moradia', tipo: 'expense' },
+  { nome: 'Transporte', tipo: 'expense' },
+  { nome: 'Saúde', tipo: 'expense' },
+  { nome: 'Educação', tipo: 'expense' },
+  { nome: 'Lazer', tipo: 'expense' },
+  { nome: 'Contas & Serviços', tipo: 'expense' },
+  { nome: 'Outros', tipo: 'expense' },
+  // Receitas
+  { nome: 'Salário', tipo: 'income' },
+  { nome: 'Rendimentos', tipo: 'income' },
+  { nome: 'Investimentos', tipo: 'income' },
+  { nome: 'Outras Receitas', tipo: 'income' },
+];
+
+/**
+ * Cadastra as categorias padrão para o usuário caso ainda não existam.
+ *
+ * @param {string} usuarioId
+ * @param {import('knex').Knex|import('knex').Knex.Transaction} [executor=db]
+ * @returns {Promise<Array>}
+ */
+export async function seedDefaultCategories(usuarioId, executor = db) {
+  const existing = await executor('categorias')
+    .where({ usuario_id: usuarioId })
+    .select('nome', 'tipo');
+
+  const existingSet = new Set(existing.map((c) => `${c.tipo}:${c.nome.toLowerCase()}`));
+
+  const toInsert = DEFAULT_CATEGORIES.filter(
+    (c) => !existingSet.has(`${c.tipo}:${c.nome.toLowerCase()}`)
+  ).map((c) => ({
+    usuario_id: usuarioId,
+    nome: c.nome,
+    tipo: c.tipo,
+    ativa: true,
+  }));
+
+  if (toInsert.length > 0) {
+    return executor('categorias').insert(toInsert).returning('*');
+  }
+
+  return [];
+}
+
 /**
  * Lista categorias ativas de um usuário, opcionalmente filtrando por tipo.
  *
@@ -149,4 +196,3 @@ export async function deleteCategory(usuarioId, categoryId) {
 
   return deactivated;
 }
-
