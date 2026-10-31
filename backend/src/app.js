@@ -2,6 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import healthRouter from './routes/health.js';
 import authRouter from './routes/auth.js';
+import accountsRouter from './routes/accounts.js';
+import categoriesRouter from './routes/categories.js';
 
 const app = express();
 
@@ -11,6 +13,8 @@ app.use(express.json());
 // Rotas do sistema
 app.use('/health', healthRouter);
 app.use('/auth', authRouter);
+app.use('/accounts', accountsRouter);
+app.use('/categories', categoriesRouter);
 
 // Tratamento para rota não encontrada (404)
 app.use((req, res) => {
