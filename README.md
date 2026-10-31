@@ -3,34 +3,34 @@
 Controle financeiro pessoal: contas, cartões (débito e crédito), faturas,
 lançamentos de despesas e receitas.
 
-**Status:** em desenvolvimento. Veja o [roteiro](docs/ROADMAP.md).
+**Status:** em desenvolvimento. Decisões de arquitetura registradas em [`docs/DECISOES.md`](docs/DECISOES.md).
 
 ## Stack
 
-FastAPI · SQLAlchemy 2 · PostgreSQL 16 · Docker Compose · pytest · ruff
+- **Backend:** Node.js (Express), Knex.js, PostgreSQL 16, Zod, Vitest + Supertest
+- **Frontend:** Vue 3 (Composition API), Vite, Pinia, Vue Router
+- **Infraestrutura:** Docker Compose
 
 ## Como rodar
 
 ```bash
-cp .env.example .env        # edite a senha do banco
+cp .env.example .env        # edite a senha do banco e segredos
 docker compose up --build
 ```
 
-- API: http://localhost:8000
-- Documentação interativa: http://localhost:8000/docs
+- API: http://localhost:3000
 - Saúde: `GET /health` e `GET /health/db`
 
 ## Testes e lint
 
 ```bash
-cd api
-python -m venv .venv && source .venv/bin/activate
-pip install -r requirements-dev.txt
-pytest
-ruff check .
+cd backend
+npm install
+npm test
+npm run lint
 ```
 
 ## Modelo de dados
 
-Proposta inicial em [`docs/schema.sql`](docs/schema.sql). As tabelas reais são
-criadas por migrações do Alembic (a partir da etapa 2).
+As tabelas reais são criadas e versionadas por migrações do **Knex.js** (`backend/src/db/migrations`).
+A proposta conceitual de referência está em [`docs/schema.sql`](docs/schema.sql).
