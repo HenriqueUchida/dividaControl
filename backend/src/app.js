@@ -5,6 +5,8 @@ import authRouter from './routes/auth.js';
 import accountsRouter from './routes/accounts.js';
 import categoriesRouter from './routes/categories.js';
 import cardsRouter from './routes/cards.js';
+import transactionsRouter from './routes/transactions.js';
+import reportsRouter from './routes/reports.js';
 
 const app = express();
 
@@ -17,6 +19,8 @@ app.use('/auth', authRouter);
 app.use('/accounts', accountsRouter);
 app.use('/categories', categoriesRouter);
 app.use('/cards', cardsRouter);
+app.use('/transactions', transactionsRouter);
+app.use('/reports', reportsRouter);
 
 // Tratamento para rota não encontrada (404)
 app.use((req, res) => {
