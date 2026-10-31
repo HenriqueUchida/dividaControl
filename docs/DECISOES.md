@@ -46,3 +46,22 @@ Este documento registra as principais decisões técnicas e de arquitetura do pr
   - O ambiente de testes automatizados utiliza o banco isolado `divida_control_test`.
   - Credenciais e segredos residem exclusivamente em `.env` (ignorado pelo Git), documentados em `.env.example` com valores fictícios.
 
+
+
+---
+
+## ADR 004: Escolha da Stack de Frontend com Vue 3 e Tailwind CSS
+
+- **Status:** Aceito
+- **Data:** 2026-10-31
+- **Contexto:**
+  O projeto requer uma interface web reativa, moderna, modular e agradável para visualização de relatórios, lançamentos de despesas e gestão de contas.
+- **Decisão:**
+  - **Framework:** Vue 3 utilizando Composition API com a sintaxe `<script setup>`.
+  - **Build Tool:** Vite para desenvolvimento rápido e builds otimizados.
+  - **Estilização:** Tailwind CSS para design utility-first responsivo e consistente.
+  - **Gerenciamento de Estado:** Pinia para stores modulares (ex: autenticação).
+  - **Roteamento:** Vue Router com navegação protegida por guardas de rota.
+  - **Comunicação HTTP:** Axios encapsulado em `src/services/` como único ponto de chamada à API.
+  - **Formatação de Moeda:** Helper centralizado convertendo centavos inteiros via `Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })`.
+  - **Testes:** Vitest.
